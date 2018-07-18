@@ -9,6 +9,6 @@
   * [CDN核心概念](cdnfen-6d41+-jia-su/cdnhe-xin-gai-nian.md)
   * [CDN实战](cdnfen-6d41+-jia-su/cdnshi-zhan.md)
   * [CDN缓存更新策略](cdnfen-6d41+-jia-su/cdnhuan-cun-geng-xin-ce-lve.md)
-  * [DSN与CDN联系](cdnfen-6d41+-jia-su/dsnyu-cdn-lian-xi.md)
+  * [DNS与CDN联系](cdnfen-6d41+-jia-su/dsnyu-cdn-lian-xi.md)
   * [CDN工作原理](cdnfen-6d41+-jia-su/cdngong-zuo-yuan-li.md)
 

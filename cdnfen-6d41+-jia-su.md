@@ -3,6 +3,8 @@
 * [CDN核心概念](#)
 * [CDN实战](#)
 * [CDN缓存更新策略](#)
+* [DNS与CDN联系](#)
+* [CDN工作原理](/cdnfen-6d41+-jia-su/cdngong-zuo-yuan-li.md)
 
 
 
