@@ -7,24 +7,20 @@
 缓存是一个到处都存在的用空间换时间的例子。通过使用多余的空间，我们能够获取更快的速度。  
 首先，看看没有网站没有接入CDN时，用户浏览器与服务器是如何交互的：
 
-![](https://upload-images.jianshu.io/upload_images/6871092-c56c2322cfab46e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240 "1.png")
+![](https://upload-images.jianshu.io/upload_images/6871092-c56c2322cfab46e6.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240 "1.png")
 
 用户在浏览网站的时候，浏览器能够在本地保存网站中的图片或者其他文件的副本，这样用户再次访问该网站的时候，浏览器就不用再下载全部的文件，减少了下载量意味着提高了页面加载的速度。
 
 中间加上一层CDN，那么用户浏览器与服务器的交互如下：
 
-![](https://upload-images.jianshu.io/upload_images/6871092-bf8e7a9758b9f75a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240 "2.png")
+![](https://upload-images.jianshu.io/upload_images/6871092-bf8e7a9758b9f75a.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240 "2.png")
 
 客户端浏览器先检查是否有本地缓存是否过期，  
 如果过期，则向CDN边缘节点发起请求，CDN边缘节点会检测用户请求数据的缓存是否过期，如果没有过期，则直接响应用户请求，此时一个完成http请求结束；  
 如果数据已经过期，那么CDN还需要向源站发出回源请求（back to the source request）,来拉取最新的数据。  
 浏览器缓存策略
 
-
-
 ### 缓存策略
-
-
 
 **Expires策略**
 
@@ -34,7 +30,9 @@ Expires是web服务器 响应消息头字段，在响应http请求时告诉浏�
 
 Expires有一个缺点，就是它的过期时间是服务器的时间，比如我的客户端时间和服务器时间相差很大，那误差就很大。
 
-比如服务器返回的是2016年7月16号过期，我的电脑时间被我修改了，快了一天为2016年7月17号，那客户端缓存就过期了。所以它被Cache-Control：max-age=秒 替代了。  
+比如服务器返回的是2016年7月16号过期，我的电脑时间被我修改了，快了一天为2016年7月17号，那客户端缓存就过期了。所以它被Cache-Control：max-age=秒 替代了。
+
+  
 **Cache-control策略**
 
 Cache-Control与Expires的作用一致，都是指明当前资源的有效期，控制浏览器是否直接从浏览器缓存取数据还是重新发请求到服务器取数据。
@@ -92,7 +90,7 @@ CDN的分流作用不仅减少了用户的访问延时，也减少的源站的�
 
 **CDN的缓存机制**
 
-　　CDN边缘节点缓存策略因服务商不同而不同，但一般都会遵循http标准协议，通过http响应头中的Cache-control: max-age的字段来设置CDN边缘节点数据缓存时间。
+CDN边缘节点缓存策略因服务商不同而不同，但一般都会遵循http标准协议，通过http响应头中的Cache-control: max-age的字段来设置CDN边缘节点数据缓存时间。
 
 当客户端向CDN节点请求数据时，CDN节点会判断缓存数据是否过期，若缓存数据并没有过期，则直接将缓存数据返回给客户端；否则，CDN节点就会向源站发出回源请求，从源站拉取最新数据，更新本地缓存，并将最新数据返回给客户端。所以，如果我们修改了内容，最好加个版本号，来容CDN重新获取资源，从而减少不必要的麻烦，比如 :
 
@@ -101,4 +99,6 @@ app.js?v=20171114 或者 style.css?v=20171114
 **CDN缓存刷新**
 
 CDN边缘节点对开发者是透明的，相比于浏览器Ctrl+F5的强制刷新来使浏览器本地缓存失效，开发者可以通过CDN服务商提供的“刷新缓存”接口来达到清理CDN边缘节点缓存的目的。这样开发者在更新数据后，可以使用“刷新缓存”功能来强制CDN节点上的数据缓存过期，保证客户端在访问时，拉取到最新的数据。
+
+
 
