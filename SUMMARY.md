@@ -13,7 +13,7 @@
   * [CDN工作原理](cdnfen-6d41+-jia-su/cdngong-zuo-yuan-li.md)
 * [Nginx](nginx.md)
   * [Nginx基础知识](nginx/nginxji-chu-zhi-shi.md)
-  * Nginx进程模型
+  * [Nginx进程模型](nginx/nginxjin-cheng-mo-xing.md)
   * [Nginx模块工作原理](nginx/nginxmo-kuai-gong-zuo-yuan-li.md)
   * Nginx实战
 
