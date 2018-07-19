@@ -21,5 +21,5 @@
   * [Nginx实战](nginx/nginxshi-zhan.md)
 * [LVS](lvs.md)
   * [LVS核心概念](lvs/lvshe-xin-gai-nian.md)
-  * LVS实战
+  * [LVS实战](lvs/lvsshi-zhan.md)
 
