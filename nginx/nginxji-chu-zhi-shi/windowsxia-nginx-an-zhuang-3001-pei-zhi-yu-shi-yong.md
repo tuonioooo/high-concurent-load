@@ -350,27 +350,42 @@ instsrv Nginxc:/nginx/srvany.exe
 
 2、Nginx nginx.conf 的配置：
 
-| worker\_processes  1;error\_log  logs/error-debug.log info; events {    worker\_connections  1024;} http {    include       mime.types;    default\_type   text/plain;    sendfile        on;     keepalive\_timeout  65;    index  index.html index.htm;     server {        listen       80;        server\_name yourdomain.com;        index index.aspx default.aspx;         location / {          root   D:\www/yourwebapp;           fastcgi\_pass   127.0.0.1:8000;          fastcgi\_param  SCRIPT\_FILENAME  $document\_root/$fastcgi\_script\_name;          include       fastcgi\_params;       }    }} |
-| :--- |
+```
+worker_processes  1;
+error_log  logs/error-debug.log info;
 
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type   text/plain;
+    sendfile        on;
+
+    keepalive_timeout  65;
+    index  index.html index.htm;
+
+    server {
+        listen       80;
+        server_name yourdomain.com;
+        index index.aspx default.aspx;
+
+        location / {
+          root   D:\www/yourwebapp;
+
+          fastcgi_pass   127.0.0.1:8000;
+          fastcgi_param  SCRIPT_FILENAME  $document_root/$fastcgi_script_name;
+          include       fastcgi_params;
+       }
+    }}
+```
 
 将上面的 FastCGI-Mono-Server 提取出来，所有文件全部注册到 GAC\(否则 Web 应用会找不到他们，当然你也可以直接放到
 
-webapp/bin
+webapp/bin\)，然后解压到某个文件夹，这里假设为 D:/FastCGI-Mono-Server。之后我们就可以按下列命令运行 FastCGI：
 
-\)，然后解压到某个文件夹，这里假设为 D:/FastCGI-Mono-Server。
-
-之后我们就可以按下列命令运行 FastCGI：
-
-fastcgi-mono-server2 /socket=tcp:127.0.0.1:8000 /root=
-
-"
-
-D:\www\yourwebapp
-
-"
-
-/applications=yourdomain.com:/:. /multiplex=True
+fastcgi-mono-server2 /socket=tcp:127.0.0.1:8000 /root="D:\www\yourwebapp" /applications=yourdomain.com:/:. /multiplex=True
 
 最后执行运行 Nginx 服务器，我们的 ASP.Net 程序就能脱离 IIS。
 
