@@ -22,9 +22,10 @@
     * [Handles（处理模块）](nginx/nginxmo-kuai-gong-zuo-yuan-li/handlesff08-chu-li-mo-kuai-ff09.md)
     * Filters（过滤模块）
     * Proxies（代理模块）
-  * [nginx进程模型](nginx/nginxjin-cheng-mo-xing.md)
   * [nginx常见问题汇总](nginx/nginxchang-jian-wen-ti-hui-zong.md)
     * [nginx的页面乱码解决方法](nginx/nginxchang-jian-wen-ti-hui-zong/nginxde-ye-mian-luan-ma-jie-jue-fang-fa.md)
+  * [CentOS6.4 添加nginx系统服务](nginx/centos64-tian-jia-nginx-xi-tong-fu-wu.md)
+  * [nginx进程模型](nginx/nginxjin-cheng-mo-xing.md)
 * [LVS](lvs.md)
   * [LVS核心概念](lvs/lvshe-xin-gai-nian.md)
   * [LVS实战](lvs/lvsshi-zhan.md)
