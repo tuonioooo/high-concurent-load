@@ -19,7 +19,8 @@
     * [nginx配置expires](nginx/nginxji-chu-zhi-shi/nginxpei-zhi-expires.md)
     * [windows下nginx启动、停止、重名命令](nginx/nginxji-chu-zhi-shi/windowsxia-nginx-qi-dong-3001-ting-zhi-3001-zhong-ming-ming-ling.md)
     * [windows下nginx安装、配置与使用](nginx/nginxji-chu-zhi-shi/windowsxia-nginx-an-zhuang-3001-pei-zhi-yu-shi-yong.md)
-    * nginx负载均衡
+    * [nginx负载均衡](nginx/nginxji-chu-zhi-shi/nginxfu-zai-jun-heng.md)
+    * [Linux下安装nginx](nginx/nginxji-chu-zhi-shi/linuxxia-an-zhuang-nginx.md)
   * [nginx模块工作原理](nginx/nginxmo-kuai-gong-zuo-yuan-li.md)
     * [Handles（处理模块）](nginx/nginxmo-kuai-gong-zuo-yuan-li/handlesff08-chu-li-mo-kuai-ff09.md)
     * Filters（过滤模块）
