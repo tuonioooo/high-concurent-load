@@ -31,6 +31,7 @@
     * [nginx报错 client intended to send too large body: 1331696 bytes](nginx/nginxchang-jian-wen-ti-hui-zong/nginxbao-cuo-client-intended-to-send-too-large-body-1331696-bytes.md)
   * [nginx实战](nginx/nginxshi-zhan.md)
     * [nginx+tomcat实现动静分离](nginx/nginxshi-zhan/nginx+tomcatshi-xian-dong-jing-fen-li.md)
+    * [nginx实现请求的负载均衡 + keepalived实现nginx的高可用](nginx/nginxshi-xian-qing-qiu-de-fu-zaijun-heng-+-keepalived-shi-xian-nginx-de-gao-ke-yong.md)
   * [CentOS6.4 添加nginx系统服务](nginx/centos64-tian-jia-nginx-xi-tong-fu-wu.md)
   * [nginx进程模型](nginx/nginxjin-cheng-mo-xing.md)
 * [LVS](lvs.md)

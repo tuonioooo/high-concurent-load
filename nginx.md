@@ -7,8 +7,6 @@
 * [CentOS6.4 添加nginx系统服务](/nginx/centos64-tian-jia-nginx-xi-tong-fu-wu.md) 
 * [nginx进程模型](/nginx/nginxjin-cheng-mo-xing.md)
 
-
-
 ### 参考文档：
 
 1. Nginx高性能Web服务器详解   链接：[https://pan.baidu.com/s/1JHrcfTCxiWR6Cl8uzGc6hA](https://pan.baidu.com/s/1JHrcfTCxiWR6Cl8uzGc6hA) 密码：mvgl
