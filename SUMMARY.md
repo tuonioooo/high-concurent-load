@@ -15,6 +15,7 @@
   * [Nginx基础知识](nginx/nginxji-chu-zhi-shi.md)
     * [Nginx的location匹配规则](nginx/nginxji-chu-zhi-shi/nginxde-location-pi-pei-gui-ze.md)
     * [Nginx的location匹配实战](nginx/nginxji-chu-zhi-shi/nginxde-location-pi-pei-shi-zhan.md)
+    * [Nginx配置中指令root和alias的区别浅析](nginx/nginxji-chu-zhi-shi/nginxpei-zhi-zhong-zhi-ling-root-he-alias-de-qu-bie-qian-xi.md)
   * [Nginx进程模型](nginx/nginxjin-cheng-mo-xing.md)
   * [Nginx模块工作原理](nginx/nginxmo-kuai-gong-zuo-yuan-li.md)
     * [Handles（处理模块）](nginx/nginxmo-kuai-gong-zuo-yuan-li/handlesff08-chu-li-mo-kuai-ff09.md)
