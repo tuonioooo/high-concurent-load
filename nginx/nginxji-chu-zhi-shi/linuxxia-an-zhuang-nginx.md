@@ -1,5 +1,11 @@
 # Linux下安装nginx
 
+## 参考文档
+
+[http://www.runoob.com/linux/nginx-install-setup.html](http://www.runoob.com/linux/nginx-install-setup.html) 
+
+[https://www.yiibai.com/nginx/nginx-install-linux-packages.html](https://www.yiibai.com/nginx/nginx-install-linux-packages.html)
+
 ## Nginx 安装
 
 系统平台：CentOS release 6.6 \(Final\) 64位。
@@ -14,7 +20,7 @@ yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel
 
 PCRE 作用是让 Nginx 支持 Rewrite 功能。
 
-1、下载 PCRE 安装包，下载地址： [http://downloads.sourceforge.net/project/pcre/pcre/8.35/pcre-8.35.tar.gz](http://downloads.sourceforge.net/project/pcre/pcre/8.35/pcre-8.35.tar.gz)
+1、下载 PCRE 安装包，下载地址： [http://downloads.sourceforge.net/project/pcre/pcre/8.35/pcre-8.35.tar.gz](http://downloads.sourceforge.net/project/pcre/pcre/8.35/pcre-8.35.tar.gz)
 
 ```
 [root@bogon src]# wget http://downloads.sourceforge.net/project/pcre/pcre/8.35/pcre-8.35.tar.gz
@@ -34,7 +40,7 @@ PCRE 作用是让 Nginx 支持 Rewrite 功能。
 [root@bogon src]# cd pcre-8.35
 ```
 
-4、编译安装 
+4、编译安装
 
 ```
 [root@bogon pcre-8.35]# ./configure
@@ -100,8 +106,6 @@ PCRE 作用是让 Nginx 支持 Rewrite 功能。
 
 配置nginx.conf ，将/usr/local/webserver/nginx/conf/nginx.conf替换为以下内容
 
-
-
 ```
 [root@bogon conf]#  cat /usr/local/webserver/nginx/conf/nginx.conf
 
@@ -123,14 +127,14 @@ http
   log_format main  '$remote_addr - $remote_user [$time_local] "$request" '
                '$status $body_bytes_sent "$http_referer" '
                '"$http_user_agent" $http_x_forwarded_for';
-  
+
 #charset gb2312;
-     
+
   server_names_hash_bucket_size 128;
   client_header_buffer_size 32k;
   large_client_header_buffers 4 32k;
   client_max_body_size 8m;
-     
+
   sendfile on;
   tcp_nopush on;
   keepalive_timeout 60;
@@ -149,7 +153,7 @@ http
   gzip_comp_level 2;
   gzip_types text/plain application/x-javascript text/css application/xml;
   gzip_vary on;
- 
+
   #limit_zone crawler $binary_remote_addr 10m;
  #下面是server虚拟主机的配置
  server
