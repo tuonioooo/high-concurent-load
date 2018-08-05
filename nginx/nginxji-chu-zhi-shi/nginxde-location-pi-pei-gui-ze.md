@@ -47,8 +47,6 @@ location \[=\|~\|~\*\|^~\] /uri/ { … }
 >
 > It can be configured using both literal strings and regular expressions. To use regular expressions, you must use a prefix:
 >
->
->
 > 1.“~” for case sensitive matching
 >
 > 2.“~\*” for case insensitive matching
@@ -95,13 +93,11 @@ location \[=\|~\|~\*\|^~\] /uri/ { … }
 >
 > 1. Directives with the “=” prefix that match the query exactly. If found, searching stops.
 >
-> 2. 
-> All remaining directives with conventional strings. If this match used the “^~” prefix, searching stops.
+> 2. All remaining directives with conventional strings. If this match used the “^~” prefix, searching stops.
 >
-> 1. Regular expressions, in the order they are defined in the configuration file.
+> 3. Regular expressions, in the order they are defined in the configuration file.
 >
-> 2. 
-> If \#3 yielded a match, that result is used. Otherwise, the match from \#2 is used.
+> 4. If \#3 yielded a match, that result is used. Otherwise, the match from \#2 is used.
 >
 > 这个顺序没必要再过多解释了。但我想用自己的话概括下上面的意思“正则 location 匹配让步普通location 的严格精确匹配结果；但覆盖普通 location 的最大前缀匹配结果”。
 >
@@ -133,9 +129,7 @@ location \[=\|~\|~\*\|^~\] /uri/ { … }
 >
 > location ^~ /images/ {
 >
-> ```
 > \# matches any query beginning with /images/ and halts searching,
-> ```
 >
 > \# so regular expressions will not be checked.
 >
@@ -155,35 +149,23 @@ location \[=\|~\|~\*\|^~\] /uri/ { … }
 >
 > }
 >
->
->
 > 上述这4 个location 的配置，没什么好解释的，唯一需要说明的是location / {\[configuration B\]} ，原文的注释严格来说是错误的，但我相信原文作者是了解规则的，只是文字描述上简化了下，但这个简化容易给读者造成“误解：先检查正则location ，再检查普通location ”。原文：“matches any query, since all queries begin with /, butregular expressions and any longer conventional blocks will be matched first. ”大意是说：“location / {} 能够匹配所有HTTP 请求，因为任何HTTP 请求都必然是以‘/ ’开始的（这半句没有错误）。但是，正则location 和其他任何比‘/ ’更长的普通location （location / {} 是普通location 里面最短的，因此其他任何普通location 都会比它更长，当然location = / {} 和 location ^~ / {} 是一样长的）会优先匹配（matched first ）。” 原文作者说“ but regular expressions will be matched first. ”应该只是想说正则 location 会覆盖这里的 location / {} ，但依然是普通location / {} 先于正则 location 匹配，接着再正则 location 匹配；但其他更长的普通 location （ any longer conventional blocks ）的确会先于 location / {} 匹配。
->
->
 >
 > Example requests:
 >
-> ```
-> \* 
-> ```
+>
 >
 > / -&gt; configuration A
 >
-> ```
-> \* 
-> ```
+>
 >
 > /documents/document.html -&gt; configuration B
 >
-> ```
-> \* 
-> ```
+>
 >
 > /images/1.gif -&gt; configuration C
 >
-> ```
-> \* 
-> ```
+>
 >
 > /documents/1.jpg -&gt; configuration D
 >
