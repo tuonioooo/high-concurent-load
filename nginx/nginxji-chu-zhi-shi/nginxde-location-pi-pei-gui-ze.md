@@ -47,12 +47,11 @@ location \[=\|~\|~\*\|^~\] /uri/ { … }
 >
 > It can be configured using both literal strings and regular expressions. To use regular expressions, you must use a prefix:
 >
-> 	
 >
-> 1.“~” for case sensitive matching
+>
+> 1.“~” for case sensitive matching
 >
 > 2.“~\*” for case insensitive matching
->
 >
 > 译文：上文讲到location /uri/ 可通过使用不同的前缀，表达不同的含义。对这些不同前缀，分下类，就2 大类：正则location ，英文说法是location using regular expressions 和普通location ，英文说法是location using literal strings 。那么其中“~ ”和“~\* ”前缀表示正则location ，“~ ”区分大小写，“~\* ”不区分大小写；其他前缀（包括：“=”，“^~ ”和“@ ”）和无任何前缀的都属于普通location 。
 >
@@ -84,35 +83,25 @@ location \[=\|~\|~\*\|^~\] /uri/ { … }
 >
 > 除了上文的“^~ ”可以阻止继续搜索正则location 外，你还可以加“= ”。那么如果“^~ ”和“= ”都能阻止继续搜索正则location 的话，那它们之间有什么区别呢？区别很简单，共同点是它们都能阻止继续搜索正则location ，不同点是“^~ ”依然遵守“最大前缀”匹配规则，然而“= ”不是“最大前缀”，而是必须是严格匹配（exact match ）。
 >
-> 这里顺便讲下“location / {} ”和“location = / {} ”的区别，“location / {} ”遵守普通location 的最大前缀匹配，由于任何URI 都必然以“/ ”根开头，所以对于一个URI ，如果有更specific 的匹配，那自然是选这个更specific 的，如果没有，“/ ”一定能为这个URI 垫背（至少能匹配到“/ ”），也就是说“location / {} ”有点默认配置的味道，其他更specific的配置能覆盖overwrite 这个默认配置（这也是为什么我们总能看到location / {} 这个配置的一个很重要的原因）。而“location = / {} ”遵守的是“严格精确匹配exact match ”，也就是只能匹配 http://host:port/ 请求，同时会禁止继续搜索正则location 。因此如果我们只想对“GET / ”请求配置作用指令，那么我们可以选“location = / {} ”这样能减少正则location 的搜索，因此效率比“location / {}” 高（注：前提是我们的目的仅仅只想对“GET / ”起作用）。
+> 这里顺便讲下“location / {} ”和“location = / {} ”的区别，“location / {} ”遵守普通location 的最大前缀匹配，由于任何URI 都必然以“/ ”根开头，所以对于一个URI ，如果有更specific 的匹配，那自然是选这个更specific 的，如果没有，“/ ”一定能为这个URI 垫背（至少能匹配到“/ ”），也就是说“location / {} ”有点默认配置的味道，其他更specific的配置能覆盖overwrite 这个默认配置（这也是为什么我们总能看到location / {} 这个配置的一个很重要的原因）。而“location = / {} ”遵守的是“严格精确匹配exact match ”，也就是只能匹配 [http://host:port/](http://host:port/) 请求，同时会禁止继续搜索正则location 。因此如果我们只想对“GET / ”请求配置作用指令，那么我们可以选“location = / {} ”这样能减少正则location 的搜索，因此效率比“location / {}” 高（注：前提是我们的目的仅仅只想对“GET / ”起作用）。
 >
 > On exact match with literal location without “=” or “^~” prefixes search is also immediately terminated.
 >
 > 前面我们说了，普通location 匹配完后，还会继续匹配正则location ；但是nginx 允许你阻止这种行为，方法很简单，只需要在普通location 前加“^~ ”或“= ”。但其实还有一种“隐含”的方式来阻止正则location 的搜索，这种隐含的方式就是：当“最大前缀”匹配恰好就是一个“严格精确（exact match ）”匹配，照样会停止后面的搜索。原文字面意思是：只要遇到“精确匹配exact match ”，即使普通location 没有带“= ”或“^~ ”前缀，也一样会终止后面的匹配。
 >
-> 先举例解释下，后面例题会用实践告诉大家。假设当前配置是：location /exact/match/test.html { 配置指令块1}，location /prefix/ { 配置指令块2} 和 location ~ \.html$ { 配置指令块3} ，如果我们请求 GET /prefix/index.html ，则会被匹配到指令块3 ，因为普通location /prefix/ 依据最大匹配原则能匹配当前请求，但是会被后面的正则location 覆盖；当请求GET /exact/match/test.html ，会匹配到指令块1 ，因为这个是普通location 的exact match ，会禁止继续搜索正则location 。
+> 先举例解释下，后面例题会用实践告诉大家。假设当前配置是：location /exact/match/test.html { 配置指令块1}，location /prefix/ { 配置指令块2} 和 location ~ .html$ { 配置指令块3} ，如果我们请求 GET /prefix/index.html ，则会被匹配到指令块3 ，因为普通location /prefix/ 依据最大匹配原则能匹配当前请求，但是会被后面的正则location 覆盖；当请求GET /exact/match/test.html ，会匹配到指令块1 ，因为这个是普通location 的exact match ，会禁止继续搜索正则location 。
 >
 > To summarize, the order in which directives are checked is as follows:
 >
-> 	1. 
+> 1. Directives with the “=” prefix that match the query exactly. If found, searching stops.
 >
-> Directives with the “=” prefix that match the query exactly. If found, searching stops.
->
-> 	2. 
->
+> 2. 
 > All remaining directives with conventional strings. If this match used the “^~” prefix, searching stops.
 >
-> 	3. 
+> 1. Regular expressions, in the order they are defined in the configuration file.
 >
-> Regular expressions, in the order they are defined in the configuration file.
->
-> 	4. 
->
+> 2. 
 > If \#3 yielded a match, that result is used. Otherwise, the match from \#2 is used.
->
->
->
->
 >
 > 这个顺序没必要再过多解释了。但我想用自己的话概括下上面的意思“正则 location 匹配让步普通location 的严格精确匹配结果；但覆盖普通 location 的最大前缀匹配结果”。
 >
@@ -124,73 +113,79 @@ location \[=\|~\|~\*\|^~\] /uri/ { … }
 >
 > location   = / {
 >
->  \# matches the query / only.
+> \# matches the query / only.
 >
->  \[ configuration A \]
+> \[ configuration A \]
 >
 > }
 >
 > location   / {
 >
->   \# matches any query, since all queries begin with /, but regular
+> \# matches any query, since all queries begin with /, but regular
 >
->   \# expressions and any longer conventional blocks will be
+> \# expressions and any longer conventional blocks will be
 >
->   \# matched first.
+> \# matched first.
 >
->  \[ configuration B \]
+> \[ configuration B \]
 >
 > }
 >
 > location ^~ /images/ {
 >
->     \# matches any query beginning with /images/ and halts searching,
+> ```
+> \# matches any query beginning with /images/ and halts searching,
+> ```
 >
->  \# so regular expressions will not be checked.
+> \# so regular expressions will not be checked.
 >
->  \[ configuration C \]
->
-> }
->
-> location ~\* \.\(gif\|jpg\|jpeg\)$ {
->
->  \# matches any request ending in gif, jpg, or jpeg. However, all
->
->  \# requests to the /images/ directory will be handled by
->
->  \# Configuration C.  
->
->  \[ configuration D \]
+> \[ configuration C \]
 >
 > }
 >
->  
+> location ~\* .\(gif\|jpg\|jpeg\)$ {
+>
+> \# matches any request ending in gif, jpg, or jpeg. However, all
+>
+> \# requests to the /images/ directory will be handled by
+>
+> \# Configuration C.
+>
+> \[ configuration D \]
+>
+> }
+>
+>
 >
 > 上述这4 个location 的配置，没什么好解释的，唯一需要说明的是location / {\[configuration B\]} ，原文的注释严格来说是错误的，但我相信原文作者是了解规则的，只是文字描述上简化了下，但这个简化容易给读者造成“误解：先检查正则location ，再检查普通location ”。原文：“matches any query, since all queries begin with /, butregular expressions and any longer conventional blocks will be matched first. ”大意是说：“location / {} 能够匹配所有HTTP 请求，因为任何HTTP 请求都必然是以‘/ ’开始的（这半句没有错误）。但是，正则location 和其他任何比‘/ ’更长的普通location （location / {} 是普通location 里面最短的，因此其他任何普通location 都会比它更长，当然location = / {} 和 location ^~ / {} 是一样长的）会优先匹配（matched first ）。” 原文作者说“ but regular expressions will be matched first. ”应该只是想说正则 location 会覆盖这里的 location / {} ，但依然是普通location / {} 先于正则 location 匹配，接着再正则 location 匹配；但其他更长的普通 location （ any longer conventional blocks ）的确会先于 location / {} 匹配。
 >
->  
+>
 >
 > Example requests:
 >
-> 	\* 
+> ```
+> \* 
+> ```
 >
 > / -&gt; configuration A
 >
-> 	\* 
+> ```
+> \* 
+> ```
 >
 > /documents/document.html -&gt; configuration B
 >
-> 	\* 
+> ```
+> \* 
+> ```
 >
 > /images/1.gif -&gt; configuration C
 >
-> 	\* 
+> ```
+> \* 
+> ```
 >
 > /documents/1.jpg -&gt; configuration D
->
->
->
->
 >
 > Note that you could define these 4 configurations in any order and the results would remain the same.
 >
