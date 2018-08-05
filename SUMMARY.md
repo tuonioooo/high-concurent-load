@@ -21,6 +21,7 @@
     * [windows下nginx安装、配置与使用](nginx/nginxji-chu-zhi-shi/windowsxia-nginx-an-zhuang-3001-pei-zhi-yu-shi-yong.md)
     * [nginx负载均衡](nginx/nginxji-chu-zhi-shi/nginxfu-zai-jun-heng.md)
     * [Linux下安装nginx](nginx/nginxji-chu-zhi-shi/linuxxia-an-zhuang-nginx.md)
+    * [nginx反向代理](nginx/nginxji-chu-zhi-shi/nginxfan-xiang-dai-li.md)
   * [nginx模块工作原理](nginx/nginxmo-kuai-gong-zuo-yuan-li.md)
   * [nginx常见问题汇总](nginx/nginxchang-jian-wen-ti-hui-zong.md)
     * [nginx的页面乱码解决方法](nginx/nginxchang-jian-wen-ti-hui-zong/nginxde-ye-mian-luan-ma-jie-jue-fang-fa.md)
