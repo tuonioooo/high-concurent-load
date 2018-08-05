@@ -153,31 +153,20 @@ location \[=\|~\|~\*\|^~\] /uri/ { … }
 >
 > Example requests:
 >
+> * / -&gt; configuration A
+> * /documents/document.html -&gt; configuration B
+> * /images/1.gif -&gt; configuration C
+> * /documents/1.jpg -&gt; configuration D
 >
->
-> / -&gt; configuration A
->
->
->
-> /documents/document.html -&gt; configuration B
->
->
->
-> /images/1.gif -&gt; configuration C
->
->
->
-> /documents/1.jpg -&gt; configuration D
->
-> Note that you could define these 4 configurations in any order and the results would remain the same.
+> **Note that you could define these 4 configurations in any order and the results would remain the same.**
 >
 > 需要提醒下：这里说“in any order ”和“… remain the same ”是因为上面只有一个正则location 。文章前面已经说了正则location 的匹配是跟编辑顺序有关系的。
 >
-> While nested locations are allowed by the configuration file parser, their use is discouraged and may produce unexpected results.
+> **While nested locations are allowed by the configuration file parser, their use is discouraged and may produce unexpected results.**
 >
 > 实际上 nginx 的配置文件解析程序是允许 location 嵌套定义的（ location / { location /uri/ {} } ）。但是我们平时却很少看见这样的配置，那是因为 nginx 官方并不建议大家这么做，因为这样会导致很多意想不到的后果。
 >
-> The prefix “@” specifies a named location. Such locations are not used during normal processing of requests, they are intended only to process internally redirected requests \(see error\_page ,try\_files \).
+> **The prefix “@” specifies a named location. Such locations are not used during normal processing of requests, they are intended only to process internally redirected requests \(see error\_page ,try\_files \).**
 >
 > 文章开始说了location 的语法中，可以有“= ”，“^~ ”，“~ ”和“~\* ”前缀，或者干脆没有任何前缀，还有“@ ”前缀，但是后面的分析我们始终没有谈到“@ ”前缀。文章最后点内容，介绍了“＠”的用途：“@ ”是用来定义“Named Location ”的（你可以理解为独立于“普通location （location using literal strings ）”和“正则location （location using regular expressions ）”之外的第三种类型），这种“Named Location ”不是用来处理普通的HTTP 请求的，它是专门用来处理“内部重定向（internally redirected ）”请求的。注意：这里说的“内部重定向（internally redirected ）”或许说成“forward ”会好点，以为内internally redirected 是不需要跟浏览器交互的，纯粹是服务端的一个转发行为。
 
