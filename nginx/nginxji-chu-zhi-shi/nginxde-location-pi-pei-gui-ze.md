@@ -2,8 +2,6 @@
 
 * ## **语法规则**
 
-官方文档解释：[http://nginx.org/en/docs/http/ngx\_http\_core\_module.html\#location](http://nginx.org/en/docs/http/ngx_http_core_module.html#location)
-
 location \[=\|~\|~\*\|^~\] /uri/ { … }
 
 | 模式 | 含义 |
@@ -17,19 +15,21 @@ location \[=\|~\|~\*\|^~\] /uri/ { … }
 
 > ## [关于一些对location认识的误区](http://www.zrqblog.org/?p=699)
 >
-> 1、 location 的匹配顺序是“先匹配正则，再匹配普通”。
+> 1、 location 的匹配顺序是“先匹配正则，再匹配普通”。
 >
-> 矫正： location 的匹配顺序其实是“先匹配普通，再匹配正则”。我这么说，大家一定会反驳我，因为按“先匹配普通，再匹配正则”解释不了大家平时习惯的按“先匹配正则，再匹配普通”的实践经验。这里我只能暂时解释下，造成这种误解的原因是：正则匹配会覆盖普通匹配（实际的规则，比这复杂，后面会详细解释）。
+> 矫正： location 的匹配顺序其实是“先匹配普通，再匹配正则”。我这么说，大家一定会反驳我，因为按“先匹配普通，再匹配正则”解释不了大家平时习惯的按“先匹配正则，再匹配普通”的实践经验。这里我只能暂时解释下，造成这种误解的原因是：正则匹配会覆盖普通匹配（实际的规则，比这复杂，后面会详细解释）。
 >
-> 2、 location 的执行逻辑跟 location 的编辑顺序无关。
+> 2、 location 的执行逻辑跟 location 的编辑顺序无关。
 >
-> 矫正：这句话不全对，“普通 location ”的匹配规则是“最大前缀”，因此“普通 location ”的确与 location 编辑顺序无关；但是“正则 location ”的匹配规则是“顺序匹配，且只要匹配到第一个就停止后面的匹配”；“普通location ”与“正则 location ”之间的匹配顺序是？先匹配普通 location ，再“考虑”匹配正则 location 。注意这里的“考虑”是“可能”的意思，也就是说匹配完“普通 location ”后，有的时候需要继续匹配“正则 location ”，有的时候则不需要继续匹配“正则 location ”。两种情况下，不需要继续匹配正则 location ：
+> 矫正：这句话不全对，“普通 location ”的匹配规则是“最大前缀”，_**因此“普通 location ”的确与 location 编辑顺序无关；但是“正则 location ”的匹配规则是“顺序匹配，且只要匹配到第一个就停止后面的匹配”**_；“普通location ”与“正则 location ”之间的匹配顺序是？先匹配普通 location ，再“考虑”匹配正则 location 。注意这里的“考虑”是“可能”的意思，也就是说匹配完“普通 location ”后，有的时候需要继续匹配“正则 location ”，有的时候则不需要继续匹配“正则 location ”。两种情况下，不需要继续匹配正则 location ：
 >
-> （ 1 ）当普通 location 前面指定了“ ^~ ”，特别告诉 Nginx 本条普通 location 一旦匹配上，则不需要继续正则匹配；
+> （ 1 ）当普通 location 前面指定了“ ^~ ”，特别告诉 Nginx 本条普通 location 一旦匹配上，则不需要继续正则匹配；
 >
-> （ 2 ）当普通location 恰好严格匹配上，不是最大前缀匹配，则不再继续匹配正则。
+> （ 2 ）当普通location 恰好严格匹配上，不是最大前缀匹配，则不再继续匹配正则。
 >
-> 总结一句话：  “正则 location 匹配让步普通 location 的严格精确匹配结果；但覆盖普通 location 的最大前缀匹配结果”
+> 总结一句话：  “正则 location 匹配让步普通 location 的严格精确匹配结果；但覆盖普通 location 的最大前缀匹配结果”
+
+
 
 
 
