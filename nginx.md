@@ -1,9 +1,13 @@
 # Nginx
 
-* [Nginx基础知识](/nginx/nginxji-chu-zhi-shi.md)
-* [Nginx进程模型](/nginx/nginxjin-cheng-mo-xing.md)
-* [Nginx模块工作原理](/nginx/nginxmo-kuai-gong-zuo-yuan-li.md)
-* [Nginx实战](/nginx/nginxshi-zhan.md)
+* [nginx基础知识](/nginx/nginxji-chu-zhi-shi.md) 
+* [nginx模块工作原理](/nginx/nginxmo-kuai-gong-zuo-yuan-li.md) 
+* [nginx常见问题汇总](/nginx/nginxchang-jian-wen-ti-hui-zong.md) 
+* [nginx实战](/nginx/nginxshi-zhan.md) 
+* [CentOS6.4 添加nginx系统服务](/nginx/centos64-tian-jia-nginx-xi-tong-fu-wu.md) 
+* [nginx进程模型](/nginx/nginxjin-cheng-mo-xing.md)
+
+
 
 ### 参考文档：
 
