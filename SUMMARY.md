@@ -17,6 +17,7 @@
     * [nginx的location匹配实战](nginx/nginxji-chu-zhi-shi/nginxde-location-pi-pei-shi-zhan.md)
     * [nginx配置中指令root和alias的区别浅析](nginx/nginxji-chu-zhi-shi/nginxpei-zhi-zhong-zhi-ling-root-he-alias-de-qu-bie-qian-xi.md)
     * [nginx配置expires](nginx/nginxji-chu-zhi-shi/nginxpei-zhi-expires.md)
+    * [windows下nginx启动、停止、重名命令](nginx/nginxji-chu-zhi-shi/windowsxia-nginx-qi-dong-3001-ting-zhi-3001-zhong-ming-ming-ling.md)
   * [nginx模块工作原理](nginx/nginxmo-kuai-gong-zuo-yuan-li.md)
     * [Handles（处理模块）](nginx/nginxmo-kuai-gong-zuo-yuan-li/handlesff08-chu-li-mo-kuai-ff09.md)
     * Filters（过滤模块）
