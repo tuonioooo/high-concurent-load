@@ -27,6 +27,7 @@
   * [nginx常见问题汇总](nginx/nginxchang-jian-wen-ti-hui-zong.md)
     * [nginx的页面乱码解决方法](nginx/nginxchang-jian-wen-ti-hui-zong/nginxde-ye-mian-luan-ma-jie-jue-fang-fa.md)
     * [nginx 安装时 make: 没有规则可以创建“default”需要的目标“build” 的解决方案](nginx/nginxchang-jian-wen-ti-hui-zong/nginx-an-zhuang-shi-make-mei-you-gui-ze-ke-yi-chuang-jian-201c-default-201d-xu-yao-de-mu-biao-201c-build-de-jie-jue-fang-an.md)
+    * [nginx报错 client intended to send too large body: 1331696 bytes](nginx/nginxchang-jian-wen-ti-hui-zong/nginxbao-cuo-client-intended-to-send-too-large-body-1331696-bytes.md)
   * [nginx实战](nginx/nginxshi-zhan.md)
     * [nginx+tomcat实现动静分离](nginx/nginxshi-zhan/nginx+tomcatshi-xian-dong-jing-fen-li.md)
   * [CentOS6.4 添加nginx系统服务](nginx/centos64-tian-jia-nginx-xi-tong-fu-wu.md)
