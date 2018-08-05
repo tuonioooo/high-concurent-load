@@ -16,12 +16,13 @@
     * [Nginx的location匹配规则](nginx/nginxji-chu-zhi-shi/nginxde-location-pi-pei-gui-ze.md)
     * [Nginx的location匹配实战](nginx/nginxji-chu-zhi-shi/nginxde-location-pi-pei-shi-zhan.md)
     * [Nginx配置中指令root和alias的区别浅析](nginx/nginxji-chu-zhi-shi/nginxpei-zhi-zhong-zhi-ling-root-he-alias-de-qu-bie-qian-xi.md)
-  * [Nginx进程模型](nginx/nginxjin-cheng-mo-xing.md)
   * [Nginx模块工作原理](nginx/nginxmo-kuai-gong-zuo-yuan-li.md)
     * [Handles（处理模块）](nginx/nginxmo-kuai-gong-zuo-yuan-li/handlesff08-chu-li-mo-kuai-ff09.md)
     * Filters（过滤模块）
     * Proxies（代理模块）
-  * [Nginx实战](nginx/nginxshi-zhan.md)
+  * [Nginx进程模型](nginx/nginxjin-cheng-mo-xing.md)
+  * [Nginx常见问题汇总](nginx/nginxchang-jian-wen-ti-hui-zong.md)
+    * [Nginx的页面乱码解决方法](nginx/nginxchang-jian-wen-ti-hui-zong/nginxde-ye-mian-luan-ma-jie-jue-fang-fa.md)
 * [LVS](lvs.md)
   * [LVS核心概念](lvs/lvshe-xin-gai-nian.md)
   * [LVS实战](lvs/lvsshi-zhan.md)
