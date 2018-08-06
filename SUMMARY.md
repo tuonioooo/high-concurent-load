@@ -23,6 +23,7 @@
     * [nginx负载均衡](nginx/nginxji-chu-zhi-shi/nginxfu-zai-jun-heng.md)
     * [Linux下安装nginx](nginx/nginxji-chu-zhi-shi/linuxxia-an-zhuang-nginx.md)
     * [nginx反向代理](nginx/nginxji-chu-zhi-shi/nginxfan-xiang-dai-li.md)
+    * [nginx正向代理](nginx/nginxji-chu-zhi-shi/nginxzheng-xiang-dai-li.md)
   * [nginx常见问题汇总](nginx/nginxchang-jian-wen-ti-hui-zong.md)
     * [nginx的页面乱码解决方法](nginx/nginxchang-jian-wen-ti-hui-zong/nginxde-ye-mian-luan-ma-jie-jue-fang-fa.md)
     * [nginx 安装时 make: 没有规则可以创建“default”需要的目标“build” 的解决方案](nginx/nginxchang-jian-wen-ti-hui-zong/nginx-an-zhuang-shi-make-mei-you-gui-ze-ke-yi-chuang-jian-201c-default-201d-xu-yao-de-mu-biao-201c-build-de-jie-jue-fang-an.md)

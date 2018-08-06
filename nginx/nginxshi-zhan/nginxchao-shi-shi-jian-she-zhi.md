@@ -59,6 +59,24 @@
 上下文 http server location  
 说明 该指令设置DNS解析超时时间
 
+> server {
+>
+>  listen 8090;
+>
+>  location / {
+>
+>  resolver 218.85.157.99 218.85.152.99;
+>
+>  resolver\_timeout 30s;
+>
+>  proxy\_pass http://$host$request\_uri;
+>
+>  }
+>
+>  access\_log  /data/httplogs/proxy-$host-aceess.log;      
+>
+> }
+
 **proxy\_connect\_timeout**
 
 语法 proxy\_connect\_timeout time  
@@ -66,6 +84,36 @@
 上下文 http server location  
 说明 该指令设置与upstream server的连接超时时间，有必要记住，这个超时不能超过75秒。  
 这个不是等待后端返回页面的时间，那是由proxy\_read\_timeout声明的。如果你的upstream服务器起来了，但是hanging住了（例如，没有足够的线程处理请求，所以把你的请求放到请求池里稍后处理），那么这个声明是没有用的，由于与upstream服务器的连接已经建立了。
+
+> //upstream配置
+>
+> upstream  my.upstream.com {
+>
+> server  10.1.1.2   max\_fails=1   fail\_timeout=10s; 
+>
+> server  10.1.1.3  max\_fails=1   fail\_timeout=10s;   \#max\_fails默认值为1,fail\_timeout默认值为10s,max\_fails=0表示不做检查
+>
+> }
+>
+> //location配置
+>
+> location ~ / {
+>
+> proxy\_redirect off;
+>
+> proxy\_set\_header Host $host;
+>
+> proxy\_set\_header X-Real-IP $remote\_addr;
+>
+> proxy\_set\_header X-Forwarded-For $proxy\_add\_x\_forwarded\_for;
+>
+> proxy\_connect\_timeout  60s;   \#默认值60s, nginx连接到后端服务器的连接超时时间
+>
+> proxy\_timeout  10m; \#默认值为10分钟，nginx接收后端服务器的响应超时时间
+>
+> proxy\_pass      http://my.upstream.com;
+>
+> }
 
 **proxy\_read\_timeout**
 
