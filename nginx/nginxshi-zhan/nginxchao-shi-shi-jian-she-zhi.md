@@ -16,9 +16,13 @@
 语法 client\_body\_timeout time  
 默认值 60s  
 上下文 http server location  
-说明 该指令设置请求体（request body）的读超时时间。仅当在一次readstep中，没有得到请求体，就会设为超时。超时后，nginx返回HTTP状态码408\(“Request timed out”\)
+说明 指定客户端与服务端建立连接后发送 request body 的超时时间。如果客户端在指定时间内没有发送任何内容，Nginx 返回 HTTP 408（Request Timed Out）。
 
-**keepalive\_timeout **
+> \# 配置段: http, server, location
+>
+> client\_body\_timeout 20s;
+
+**keepalive\_timeout （长连接类型）**
 
 语法 keepalive\_timeout timeout \[ header\_timeout \]  
 默认值 75s  
@@ -43,6 +47,10 @@
 默认值 5s  
 上下文 http server location  
 说明 lingering\_close生效后，在关闭连接前，会检测是否有用户发送的数据到达服务器，如果超过lingering\_timeout时间后还没有数据可读，就直接关闭连接；否则，必须在读取完连接缓冲区上的数据并丢弃掉后才会关闭连接。
+
+> \# 配置段: http, server, location
+>
+> lingering\_timeout 60s;
 
 **resolver\_timeout**
 
