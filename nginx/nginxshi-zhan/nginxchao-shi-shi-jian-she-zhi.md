@@ -89,8 +89,6 @@ nginx会缓存解析的结果。默认情况下，缓存时间是名字解析响
 >
 > }
 
-
-
 **proxy\_connect\_timeout**
 
 语法 proxy\_connect\_timeout time  
@@ -134,7 +132,11 @@ nginx会缓存解析的结果。默认情况下，缓存时间是名字解析响
 语法 proxy\_read\_timeout time  
 默认值 60s  
 上下文 http server location  
-说明 该指令设置与代理服务器的读超时时间。它决定了nginx会等待多长时间来获得请求的响应。这个时间不是获得整个response的时间，而是两次reading操作的时间。
+说明 该指令设置与代理服务器的读超时时间。它决定了nginx会等待多长时间来获得请求的响应。这个时间不是获得整个response的时间，而是两次reading操作的时间。否则会报**504 Gateway Time-out问题**
+
+> \# 配置段: http, server, location
+>
+> proxy\_read\_timeout 90;
 
 **proxy\_send\_timeout**
 
@@ -143,10 +145,28 @@ nginx会缓存解析的结果。默认情况下，缓存时间是名字解析响
 上下文 http server location  
 说明 这个指定设置了发送请求给upstream服务器的超时时间。超时设置不是为了整个发送期间，而是在两次write操作期间。如果超时后，upstream没有收到新的数据，nginx会关闭连接
 
+> \# 配置段: http, server, location
+>
+> **proxy\_send\_timeout** 90;
+
 **proxy\_upstream\_fail\_timeout（fail\_timeout）**
 
 语法 server address \[fail\_timeout=30s\]  
 默认值 10s  
 上下文 upstream  
 说明 Upstream模块下 server指令的参数，设置了某一个upstream后端失败了指定次数（max\_fails）后，该后端不可操作的时间，默认为10秒
+
+> upstream backend-others {
+>
+>             server 10.x.x.x max\_fails=0 fail\_timeout=10s;
+>
+>             server 10.x.x.x:81 max\_fails=0 fail\_timeout=10s;           
+>
+>             keepalive 20000;
+>
+>
+>
+>         }
+
+
 
