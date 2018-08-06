@@ -52,6 +52,18 @@
 >
 > lingering\_timeout 60s;
 
+**resolver**
+
+语法: resolver address ... \[valid=time\];
+
+默认值: —
+
+配置段: http, server, location
+
+配置DNS服务器IP地址。可以指定多个，以轮询方式请求。
+
+nginx会缓存解析的结果。默认情况下，缓存时间是名字解析响应中的TTL字段的值，可以通过valid参数更改。
+
 **resolver\_timeout**
 
 语法 resolver\_timeout time  
@@ -61,21 +73,23 @@
 
 > server {
 >
->  listen 8090;
+> listen 8090;
 >
->  location / {
+> location / {
 >
->  resolver 218.85.157.99 218.85.152.99;
+> resolver 218.85.157.99 218.85.152.99;
 >
->  resolver\_timeout 30s;
+> resolver\_timeout 30s;
 >
->  proxy\_pass http://$host$request\_uri;
->
->  }
->
->  access\_log  /data/httplogs/proxy-$host-aceess.log;      
+> proxy\_pass [http://$host$request\_uri](http://$host$request_uri);
 >
 > }
+>
+> access\_log  /data/httplogs/proxy-$host-aceess.log;
+>
+> }
+
+
 
 **proxy\_connect\_timeout**
 
@@ -87,11 +101,11 @@
 
 > //upstream配置
 >
-> upstream  my.upstream.com {
+> upstream  my.upstream.com {
 >
-> server  10.1.1.2   max\_fails=1   fail\_timeout=10s; 
+> server  10.1.1.2   max\_fails=1   fail\_timeout=10s;
 >
-> server  10.1.1.3  max\_fails=1   fail\_timeout=10s;   \#max\_fails默认值为1,fail\_timeout默认值为10s,max\_fails=0表示不做检查
+> server  10.1.1.3  max\_fails=1   fail\_timeout=10s;   \#max\_fails默认值为1,fail\_timeout默认值为10s,max\_fails=0表示不做检查
 >
 > }
 >
@@ -107,11 +121,11 @@
 >
 > proxy\_set\_header X-Forwarded-For $proxy\_add\_x\_forwarded\_for;
 >
-> proxy\_connect\_timeout  60s;   \#默认值60s, nginx连接到后端服务器的连接超时时间
+> proxy\_connect\_timeout  60s;   \#默认值60s, nginx连接到后端服务器的连接超时时间
 >
-> proxy\_timeout  10m; \#默认值为10分钟，nginx接收后端服务器的响应超时时间
+> proxy\_timeout  10m; \#默认值为10分钟，nginx接收后端服务器的响应超时时间
 >
-> proxy\_pass      http://my.upstream.com;
+> proxy\_pass      [http://my.upstream.com](http://my.upstream.com);
 >
 > }
 
