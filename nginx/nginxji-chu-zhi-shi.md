@@ -8,6 +8,8 @@
 * [windows下nginx安装、配置与使用](/nginx/nginxji-chu-zhi-shi/windowsxia-nginx-an-zhuang-3001-pei-zhi-yu-shi-yong.md) 
 * [nginx负载均衡](/nginx/nginxji-chu-zhi-shi/nginxfu-zai-jun-heng.md) 
 * [Linux下安装nginx](/nginx/nginxji-chu-zhi-shi/linuxxia-an-zhuang-nginx.md)
+* [nginx反向代理](/nginx/nginxji-chu-zhi-shi/nginxfan-xiang-dai-li.md)
+* [nginx正向代理](/nginx/nginxji-chu-zhi-shi/nginxzheng-xiang-dai-li.md)
 
 ### 参考文档：
 
