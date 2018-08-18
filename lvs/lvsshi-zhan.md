@@ -6,11 +6,9 @@
 
 ## 一、负载均衡LVS基本介绍 {#blogTitle0}
 
-    LB集群的架构和原理很简单，就是当用户的请求过来时，会直接分发到Director Server上，然后它把用户的请求根据设置好的调度算法，智能均衡地分发到后端真正服务器\(real server\)上。为了避免不同机器上用户请求得到的数据不一样，需要用到了共享存储，这样保证所有用户请求的数据是一样的。
+LB集群的架构和原理很简单，就是当用户的请求过来时，会直接分发到Director Server上，然后它把用户的请求根据设置好的调度算法，智能均衡地分发到后端真正服务器\\(real server\\)上。为了避免不同机器上用户请求得到的数据不一样，需要用到了共享存储，这样保证所有用户请求的数据是一样的。
 
-    LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是一个由章文嵩博士发起的一个开源项目，它的官方网站是[http://www.linuxvirtualserver.org](http://www.linuxvirtualserver.org/)现在 LVS 已经是 Linux 内核标准的一部分。使用 LVS 可以达到的技术目标是：通过 LVS 达到的负载均衡技术和 Linux 操作系统实现一个高性能高可用的 Linux 服务器集群，它具有良好的可靠性、可扩展性和可操作性。从而以低廉的成本实现最优的性能。LVS 是一个实现负载均衡集群的开源软件项目，LVS架构从逻辑上可分为调度层、Server集群层和共享存储。
-
-
+LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是一个由章文嵩博士发起的一个开源项目，它的官方网站是\[http://www.linuxvirtualserver.org\]\(http://www.linuxvirtualserver.org/\)现在 LVS 已经是 Linux 内核标准的一部分。使用 LVS 可以达到的技术目标是：通过 LVS 达到的负载均衡技术和 Linux 操作系统实现一个高性能高可用的 Linux 服务器集群，它具有良好的可靠性、可扩展性和可操作性。从而以低廉的成本实现最优的性能。LVS 是一个实现负载均衡集群的开源软件项目，LVS架构从逻辑上可分为调度层、Server集群层和共享存储。
 
 ## 二、LVS的基本工作原理 {#blogTitle1}
 
@@ -21,16 +19,12 @@
 **3.**IPVS是工作在INPUT链上的，当用户请求到达INPUT时，IPVS会将用户请求和自己已定义好的集群服务进行比对，如果用户请求的就是定义的集群服务，那么此时IPVS会强行修改数据包里的目标IP地址及端口，并将新的数据包发往POSTROUTING链  
 **4.**POSTROUTING链接收数据包后发现目标IP地址刚好是自己的后端服务器，那么此时通过选路，将数据包最终发送给后端的服务器
 
-
-
 ## 三、LVS的组成 {#blogTitle2}
 
 LVS 由2部分程序组成，包括 ipvs 和 ipvsadm。
 
 1. ipvs\(ip virtual server\)：一段代码工作在内核空间，叫ipvs，是真正生效实现调度的代码。  
 2. ipvsadm：另外一段是工作在用户空间，叫ipvsadm，负责为ipvs内核框架编写规则，定义谁是集群服务，而谁是后端真实的服务器\(Real Server\)
-
-
 
 ## 四、LVS相关术语 {#blogTitle3}
 
@@ -42,8 +36,6 @@ LVS 由2部分程序组成，包括 ipvs 和 ipvsadm。
 6. CIP：Client IP，访问客户端的IP地址。
 
 下边是三种工作模式的原理和特点总结。
-
-
 
 ## 五、LVS/NAT原理和特点 {#blogTitle4}
 
@@ -66,8 +58,6 @@ LVS 由2部分程序组成，包括 ipvs 和 ipvsadm。
 * 支持端口映射
 * RS可以使用任意操作系统
 * 缺陷：对Director Server压力会比较大，请求和响应都需经过director server
-
-
 
 ## 六、LVS/DR原理和特点 {#blogTitle5}
 
@@ -102,8 +92,6 @@ LVS 由2部分程序组成，包括 ipvs 和 ipvsadm。
 * arptables：在arp的层次上实现在ARP解析时做防火墙规则，过滤RS响应ARP请求。这是由iptables提供的
 * 修改RS上内核参数（arp\_ignore和arp\_announce）将RS上的VIP配置在lo接口的别名上，并限制其不能响应对VIP地址解析请求。
 
-
-
 ## 七、LVS/Tun原理和特点 {#blogTitle6}
 
 在原有的IP报文外再次封装多一层IP首部，内部IP首部\(源地址为CIP，目标IIP为VIP\)，外层IP首部\(源地址为DIP，目标IP为RIP\)
@@ -127,8 +115,6 @@ LVS 由2部分程序组成，包括 ipvs 和 ipvsadm。
 
 **其实企业中最常用的是 DR 实现方式，而 NAT 配置上比较简单和方便，后边实践中会总结 DR 和 NAT 具体使用配置过程。**
 
-
-
 ## 八、LVS的八种调度算法 {#blogTitle7}
 
 **1. 轮叫调度 rr**  
@@ -138,7 +124,7 @@ LVS 由2部分程序组成，包括 ipvs 和 ipvsadm。
 这种算法比 rr 的算法多了一个权重的概念，可以给 RS 设置权重，权重越高，那么分发的请求数越多，权重的取值范围 0 – 100。主要是对rr算法的一种优化和补充， LVS 会考虑每台服务器的性能，并给每台服务器添加要给权值，如果服务器A的权值为1，服务器B的权值为2，则调度到服务器B的请求会是服务器A的2倍。权值越高的服务器，处理的请求越多。
 
 **3. 最少链接 lc**  
-这个算法会根据后端 RS 的连接数来决定把请求分发给谁，比如 RS1 连接数比 RS2 连接数少，那么请求就优先发给 RS1 
+这个算法会根据后端 RS 的连接数来决定把请求分发给谁，比如 RS1 连接数比 RS2 连接数少，那么请求就优先发给 RS1
 
 **4. 加权最少链接 wlc**  
 这个算法比 lc 多了一个权重的概念。
@@ -154,8 +140,6 @@ LVS 由2部分程序组成，包括 ipvs 和 ipvsadm。
 
 **8. 源地址散列调度算法 sh**  
 与目标地址散列调度算法类似，但它是根据源地址散列算法进行静态分配固定的服务器资源。
-
-
 
 ## 九、实践LVS的NAT模式 {#blogTitle8}
 
@@ -230,7 +214,7 @@ ipvsadm -ln
 
 三台机器：
 
-* Director节点：  \(eth0 192.168.0.8  vip eth0:0 192.168.0.38\)
+* Director节点：  \(eth0 192.168.0.8  vip eth0:0 192.168.0.38\)
 * Real server1： \(eth0 192.168.0.18 vip lo:0 192.168.0.38\)
 * Real server2： \(eth0 192.168.0.28 vip lo:0 192.168.0.38\)
 
