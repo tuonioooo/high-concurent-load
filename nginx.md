@@ -6,6 +6,7 @@
 * [nginx实战](/nginx/nginxshi-zhan.md) 
 * [CentOS6.4 添加nginx系统服务](/nginx/centos64-tian-jia-nginx-xi-tong-fu-wu.md) 
 * [nginx进程模型](/nginx/nginxjin-cheng-mo-xing.md)
+* [CentOS7 添加nginx系统服务](/nginx/centos7-tian-jia-nginx-xi-tong-fu-wu.md)
 
 ### 参考文档：
 
