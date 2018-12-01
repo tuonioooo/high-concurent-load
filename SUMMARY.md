@@ -34,6 +34,7 @@
     * [nginx超时时间设置](nginx/nginxshi-zhan/nginxchao-shi-shi-jian-she-zhi.md)
   * [CentOS6.4 添加nginx系统服务](nginx/centos64-tian-jia-nginx-xi-tong-fu-wu.md)
   * [nginx进程模型](nginx/nginxjin-cheng-mo-xing.md)
+  * [CentOS7 添加nginx系统服务](nginx/centos7-tian-jia-nginx-xi-tong-fu-wu.md)
 * [LVS](lvs.md)
   * [LVS核心概念](lvs/lvshe-xin-gai-nian.md)
   * [LVS实战](lvs/lvsshi-zhan.md)
