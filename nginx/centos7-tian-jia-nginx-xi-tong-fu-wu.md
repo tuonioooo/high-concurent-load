@@ -62,6 +62,10 @@ exit 0
 > 注意：上面 文件最好是在终端服务器上编辑，否则会产生其他编码，或者其他不可预测额问题：比如如下问题：
 >
 > Failed at step EXEC spawning /etc/rc.d/init.d/nginx: No such file or directory
+>
+>  ExecStart=/etc/rc.d/init.d/nginx start \(code=exited, status=203/EXEC\)
+
+
 
 设置执行权限
 
