@@ -63,9 +63,7 @@ exit 0
 >
 > Failed at step EXEC spawning /etc/rc.d/init.d/nginx: No such file or directory
 >
->  ExecStart=/etc/rc.d/init.d/nginx start \(code=exited, status=203/EXEC\)
-
-
+> ExecStart=/etc/rc.d/init.d/nginx start \(code=exited, status=203/EXEC\)
 
 设置执行权限
 
