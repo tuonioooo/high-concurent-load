@@ -2,7 +2,7 @@
 
 ## 参考文档
 
-[http://www.runoob.com/linux/nginx-install-setup.html](http://www.runoob.com/linux/nginx-install-setup.html) 
+[http://www.runoob.com/linux/nginx-install-setup.html](http://www.runoob.com/linux/nginx-install-setup.html)
 
 [https://www.yiibai.com/nginx/nginx-install-linux-packages.html](https://www.yiibai.com/nginx/nginx-install-linux-packages.html)
 
