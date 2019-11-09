@@ -189,6 +189,8 @@ http
 
 ```
 [root@bogon conf]# /usr/local/webserver/nginx/sbin/nginx -t
+[root@bogon conf]# nginx -c /usr/local/nginx/conf/nginx.conf
+# -c filename     : 设置配置文件（默认是：/usr/local/etc/nginx/nginx.conf）
 ```
 
 ![](http://www.runoob.com/wp-content/uploads/2015/01/nginx5.png)
