@@ -2,13 +2,13 @@
 
 创建nginx启动命令脚本
 
-```
+```text
 vi /etc/init.d/nginx
 ```
 
 插入以下内容, 注意修改PATH和NAME字段, 匹配自己的安装路径
 
-```
+```text
 #! /bin/bash
 # chkconfig: - 85 15
 PATH=/usr/local/nginx
@@ -67,32 +67,32 @@ exit 0
 
 设置执行权限
 
-```
+```text
 chmod a+x /etc/init.d/nginx
 ```
 
 注册成服务
 
-```
+```text
 chkconfig --add nginx
 ```
 
 设置开机启动
 
-```
+```text
 chkconfig nginx on
 ```
 
 重启, 查看nginx服务是否自动启动
 
-```
+```text
 shutdown -h 0 -r
 netstat -apn|grep nginx
 ```
 
 对nginx服务执行停止/启动/重新读取配置文件操作
 
-```
+```text
 #启动nginx服务
 systemctl start nginx.service
 #停止nginx服务
@@ -102,6 +102,4 @@ systemctl restart nginx.service
 #重新读取nginx配置(这个最常用, 不用停止nginx服务就能使修改的配置生效)
 systemctl reload nginx.service
 ```
-
-
 

@@ -1,10 +1,10 @@
 # CentOS6.4 添加nginx系统服务
 
-### 简介：
+## 简介：
 
 Nginx安装完成后默认不会注册为系统服务，所以需要手工添加系统服务脚本。在/etc/init.d目录下新建nginx文件，并更改权限其即可。
 
-### 1、新建nginx文件
+## 1、新建nginx文件
 
 1.1、新建文件：
 
@@ -12,7 +12,7 @@ vi /etc/init.d/nginx
 
 1.2、添加内容如下
 
-```
+```text
 #!/bin/sh
 #
 # nginx - this script starts and stops the nginx daemon
@@ -112,7 +112,7 @@ case "$1" in
 esac
 ```
 
-### 2、修改其权限并开机启动
+## 2、修改其权限并开机启动
 
 2.1、修改权限：
 
@@ -126,7 +126,7 @@ esac
 
 **chkconfig --list**
 
-### 3、备注
+## 3、备注
 
 3.1、启动服务：
 
@@ -139,8 +139,4 @@ esac
 3.3、重启服务：
 
 **service nginx reload**
-
-### 
-
-
 

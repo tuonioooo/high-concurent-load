@@ -1,30 +1,30 @@
 # CDN缓存更新策略
 
-### 参考文档：
+## 参考文档：
 
 [https://www.cnblogs.com/xinxiucan/p/7832368.html](https://www.cnblogs.com/xinxiucan/p/7832368.html)
 
-### 概述
+## 概述
 
 **缓存是什么？**
 
 缓存是一个到处都存在的用空间换时间的例子。通过使用多余的空间，我们能够获取更快的速度。  
 首先，看看没有网站没有接入CDN时，用户浏览器与服务器是如何交互的：
 
-![](https://upload-images.jianshu.io/upload_images/6871092-c56c2322cfab46e6.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240 "1.png")
+![1.png](https://upload-images.jianshu.io/upload_images/6871092-c56c2322cfab46e6.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240)
 
 用户在浏览网站的时候，浏览器能够在本地保存网站中的图片或者其他文件的副本，这样用户再次访问该网站的时候，浏览器就不用再下载全部的文件，减少了下载量意味着提高了页面加载的速度。
 
 中间加上一层CDN，那么用户浏览器与服务器的交互如下：
 
-![](https://upload-images.jianshu.io/upload_images/6871092-bf8e7a9758b9f75a.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240 "2.png")
+![2.png](https://upload-images.jianshu.io/upload_images/6871092-bf8e7a9758b9f75a.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240)
 
 客户端浏览器先检查是否有本地缓存是否过期，  
 如果过期，则向CDN边缘节点发起请求，CDN边缘节点会检测用户请求数据的缓存是否过期，如果没有过期，则直接响应用户请求，此时一个完成http请求结束；  
 如果数据已经过期，那么CDN还需要向源站发出回源请求（back to the source request）,来拉取最新的数据。  
 浏览器缓存策略
 
-### 缓存策略
+## 缓存策略
 
 **Expires策略**
 
@@ -61,10 +61,10 @@ Cache-Control可拥有如下值：
 > must-revalidate:作用与no-cache相同，但更严格，强制意味更明显
 
 **Last-Modified：**  
-　　标示这个响应资源的最后修改时间，web服务器在响应请求时，告诉浏览器资源的最后修改时间。
+标示这个响应资源的最后修改时间，web服务器在响应请求时，告诉浏览器资源的最后修改时间。
 
 **If-Modified-Since：**  
-　　当资源过期时（也就是Cache-Control:max-age=0，），发现资源具有Last-Modified声明，则再次向web服务器请求时带上头If-Modified-Since，表示请求时间。web服务器收到请求后发现有头If-Modified-Since 则与被请求资源的最后修改时间进行比对。若Last-Modified的时间较新，说明最后修改时间较新，说明资源又被改动过，则响应整的资源重新从服务器读取，而不是读取缓存，返回200状态吗；若If-Modified-Since的时间比Last-Modified新或者相等，说明服务器的内容没有更新，直接读取缓存即可，返回304状态码，告知浏览器继续使用所保存的cache
+当资源过期时（也就是Cache-Control:max-age=0，），发现资源具有Last-Modified声明，则再次向web服务器请求时带上头If-Modified-Since，表示请求时间。web服务器收到请求后发现有头If-Modified-Since 则与被请求资源的最后修改时间进行比对。若Last-Modified的时间较新，说明最后修改时间较新，说明资源又被改动过，则响应整的资源重新从服务器读取，而不是读取缓存，返回200状态吗；若If-Modified-Since的时间比Last-Modified新或者相等，说明服务器的内容没有更新，直接读取缓存即可，返回304状态码，告知浏览器继续使用所保存的cache
 
 **Etag**
 
@@ -74,14 +74,9 @@ ETag可以用来解决这种问题。ETag是一个文件的唯一标志符。就
 
 **浏览器缓存刷新**
 
-1. 在地址栏中输入网址后按回车或点击转到按钮  
-   浏览器以最少的请求来获取网页的数据，浏览器会对所有没有过期的内容直接使用本地缓存，从而减少了对浏览器的请求。所以，Expires，max-age标记只对这种方式有效。
-
-2. 按F5或浏览器刷新按钮  
-   浏览器会在请求中附加必要的缓存协商，但不允许浏览器直接使用本地缓存，它能够让 Last-Modified、ETag发挥效果，但是对Expires无效。
-
-3. 按Ctrl+F5或按Ctrl并点击刷新按钮  
-   这种方式就是强制刷新，总会发起一个全新的请求，不使用任何缓存。
+1. 在地址栏中输入网址后按回车或点击转到按钮 浏览器以最少的请求来获取网页的数据，浏览器会对所有没有过期的内容直接使用本地缓存，从而减少了对浏览器的请求。所以，Expires，max-age标记只对这种方式有效。
+2. 按F5或浏览器刷新按钮 浏览器会在请求中附加必要的缓存协商，但不允许浏览器直接使用本地缓存，它能够让 Last-Modified、ETag发挥效果，但是对Expires无效。
+3. 按Ctrl+F5或按Ctrl并点击刷新按钮 这种方式就是强制刷新，总会发起一个全新的请求，不使用任何缓存。
 
 **CDN缓存**
 

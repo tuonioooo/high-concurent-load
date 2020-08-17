@@ -13,24 +13,22 @@
 1、轮询（默认）  
 每个请求**按时间顺序逐一分配**到不同的后端服务器，如果后端服务器down掉，能自动剔除。
 
-```
+```text
 upstream backserver {
     server 192.168.0.14;
     server 192.168.0.15;
 }
-
 ```
 
 2、weight  
 指定轮询几率，weight和访问比率成正比，用于后端服务器性能不均的  
 情况。
 
-```
+```text
 upstream backserver {
     server 192.168.0.14 weight=3;
     server 192.168.0.15 weight=7;
 }
-
 ```
 
 权重越高，在被访问的概率越大，如上例，分别是30%，70%。
@@ -41,7 +39,7 @@ upstream backserver {
 
 每个请求按访问ip的hash结果分配，这样每个访客固定访问一个后端服务器，可以解决session的问题。
 
-```
+```text
 upstream backserver {
     ip_hash;
     server 192.168.0.14:88;
@@ -52,7 +50,7 @@ upstream backserver {
 4、fair（第三方）  
 按后端服务器的响应时间来分配请求，响应时间短的优先分配。
 
-```
+```text
 upstream backserver {
     server server1;
     server server2;
@@ -63,14 +61,13 @@ upstream backserver {
 5、url\_hash（第三方）  
 按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，后端服务器为缓存时比较有效。
 
-```
+```text
 upstream backserver {
     server squid1:3128;
     server squid2:3128;
     hash $request_uri;
     hash_method crc32;
 }
-
 ```
 
 每个设备的状态设置为:
@@ -83,7 +80,7 @@ upstream backserver {
 
 配置实例：
 
-```
+```text
 #user  nobody;
 worker_processes  4;
 events {
@@ -111,6 +108,4 @@ http{
             }
 }
 ```
-
-
 

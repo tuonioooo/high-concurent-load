@@ -11,7 +11,7 @@
 >
 > client\_header\_timeout 10s;
 
-**client\_body\_timeout **
+**client\_body\_timeout** 
 
 语法 client\_body\_timeout time  
 默认值 60s  
@@ -85,7 +85,7 @@ nginx会缓存解析的结果。默认情况下，缓存时间是名字解析响
 >
 > }
 >
-> access\_log  /data/httplogs/proxy-$host-aceess.log;
+> access\_log /data/httplogs/proxy-$host-aceess.log;
 >
 > }
 
@@ -99,11 +99,11 @@ nginx会缓存解析的结果。默认情况下，缓存时间是名字解析响
 
 > //upstream配置
 >
-> upstream  my.upstream.com {
+> upstream my.upstream.com {
 >
-> server  10.1.1.2   max\_fails=1   fail\_timeout=10s;
+> server 10.1.1.2 max\_fails=1 fail\_timeout=10s;
 >
-> server  10.1.1.3  max\_fails=1   fail\_timeout=10s;   \#max\_fails默认值为1,fail\_timeout默认值为10s,max\_fails=0表示不做检查
+> server 10.1.1.3 max\_fails=1 fail\_timeout=10s; \#max\_fails默认值为1,fail\_timeout默认值为10s,max\_fails=0表示不做检查
 >
 > }
 >
@@ -119,11 +119,11 @@ nginx会缓存解析的结果。默认情况下，缓存时间是名字解析响
 >
 > proxy\_set\_header X-Forwarded-For $proxy\_add\_x\_forwarded\_for;
 >
-> proxy\_connect\_timeout  60s;   \#默认值60s, nginx连接到后端服务器的连接超时时间
+> proxy\_connect\_timeout 60s; \#默认值60s, nginx连接到后端服务器的连接超时时间
 >
-> proxy\_timeout  10m; \#默认值为10分钟，nginx接收后端服务器的响应超时时间
+> proxy\_timeout 10m; \#默认值为10分钟，nginx接收后端服务器的响应超时时间
 >
-> proxy\_pass      [http://my.upstream.com](http://my.upstream.com);
+> proxy\_pass [http://my.upstream.com](http://my.upstream.com);
 >
 > }
 
@@ -158,15 +158,17 @@ nginx会缓存解析的结果。默认情况下，缓存时间是名字解析响
 
 > upstream backend-others {
 >
->             server 10.x.x.x max\_fails=0 fail\_timeout=10s;
->
->             server 10.x.x.x:81 max\_fails=0 fail\_timeout=10s;           
->
->             keepalive 20000;
+> ```text
+>         server 10.x.x.x max\_fails=0 fail\_timeout=10s;
 >
 >
+>         server 10.x.x.x:81 max\_fails=0 fail\_timeout=10s;           
 >
->         }
-
-
+>
+>         keepalive 20000;
+>
+>
+>
+>     }
+> ```
 

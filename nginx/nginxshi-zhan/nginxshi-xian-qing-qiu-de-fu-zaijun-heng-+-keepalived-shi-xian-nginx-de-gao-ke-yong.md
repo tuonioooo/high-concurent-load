@@ -10,9 +10,9 @@
 
 ## 环境准备
 
-192.168.0.221：nginx + keepalived   master
+192.168.0.221：nginx + keepalived master
 
-192.168.0.222：nginx + keepalived   backup
+192.168.0.222：nginx + keepalived backup
 
 192.168.0.223：tomcat
 
@@ -22,7 +22,7 @@
 
 各个组件之间的关系图如下：
 
-![](/assets/import-nginx-01.png)
+![](../../.gitbook/assets/import-nginx-01.png)
 
 ## tomcat做应用服务器
 
@@ -36,19 +36,19 @@ tomcat的安装不在本博客范围之内，具体可参考[virtualBox安装cen
 
 访问myWeb如下
 
-![](/assets/import-nginx-02.png)
+![](../../.gitbook/assets/import-nginx-02.png)
 
 ## nginx做负载均衡
 
 nginx的安装，本文就不讲述了，具体可参考
 
-[LVS + keepalived + nginx + tomcat 实现主从热备 + 负载均衡](http://www.cnblogs.com/youzhibing/p/5061786.html) 
+[LVS + keepalived + nginx + tomcat 实现主从热备 + 负载均衡](http://www.cnblogs.com/youzhibing/p/5061786.html)
 
-[Linux下安装nginx](/nginx/nginxji-chu-zhi-shi/linuxxia-an-zhuang-nginx.md) 
+[Linux下安装nginx](../nginxji-chu-zhi-shi/linuxxia-an-zhuang-nginx.md)
 
 nginx.conf
 
-```
+```text
 user  root;            #运行用户
 worker_processes  1;        #启动进程,通常设置成和cpu的数量相等
 
@@ -77,7 +77,7 @@ http
     client_header_buffer_size   32K;
     large_client_header_buffers  4 32k;
     # client_max_body_size   8m;
-    
+
     #sendfile 指令指定 nginx 是否调用 sendfile 函数（zero copy 方式）来输出文件，对于普通应用，
     #必须设为 on,如果用来进行下载等应用磁盘IO重负载应用，可设置为 off，以平衡磁盘与网络I/O处理速度，降低系统的uptime.
     sendfile        on;
@@ -108,12 +108,12 @@ http
     {
         listen       80;        #监听端口    
         server_name  localhost;
-    
+
     #默认请求设置
     location / {
         proxy_pass http://tomcat_pool;    #转向tomcat处理
     }
-    
+
     #所有的jsp页面均由tomcat处理
     location ~ \.(jsp|jspx|dp)?$
     {
@@ -121,7 +121,7 @@ http
         proxy_set_header X-Real-IP $remote_addr;
         proxy_pass http://tomcat_pool;    #转向tomcat处理
     }
-    
+
     #所有的静态文件直接读取不经过tomcat,nginx自己处理
     location ~ .*\.(htm|html|gif|jpg|jpeg|png|bmp|swf|ioc|rar|zip|txt|flv|mid|doc|ppt|pdf|xls|mp3|wma)$ 
     { 
@@ -152,9 +152,9 @@ http
 
 访问nginx，效果如下：
 
-![](/assets/import-nginx-03.png)
+![](https://github.com/tuonioooo/high-concurent-load/tree/f7109ab0ccbcdcd1e6ac274ba69f0d807cd6862a/assets/import-nginx-03.png)
 
-![](/assets/import-nginx-04.png)
+![](../../.gitbook/assets/import-nginx-04.png)
 
 两台nginx服务器服务正常，此时是没有主从之分的，两者级别一样高，当配置keepalived之后就有了主从之分了。
 
@@ -166,7 +166,7 @@ keepalived作用其实在第一张图中已经有所体现，主要起到两个�
 
 master上的keepalived.conf内容如下：
 
-```
+```text
 global_defs {
     notification_email {
         997914490@qq.com
@@ -202,7 +202,7 @@ vrrp_instance VI_1 {
 
 backup上的keepalived.conf内容如下：
 
-```
+```text
 global_defs {
     notification_email {
         997914490@qq.com
@@ -236,16 +236,18 @@ vrrp_instance VI_1 {
 }
 ```
 
-　nginx检测脚本check\_nginx\_pid.sh内容如下：
+nginx检测脚本check\_nginx\_pid.sh内容如下：
 
-    #!/bin/bash
-    A=`ps -C nginx --no-header |wc -l`        
-    if [ $A -eq 0 ];then                            
-          /usr/local/nginx/sbin/nginx                #重启nginx
-          if [ `ps -C nginx --no-header |wc -l` -eq 0 ];then    #nginx重启失败，则停掉keepalived服务，进行VIP转移
-                  killall keepalived                    
-          fi
-    fi
+```text
+#!/bin/bash
+A=`ps -C nginx --no-header |wc -l`        
+if [ $A -eq 0 ];then                            
+      /usr/local/nginx/sbin/nginx                #重启nginx
+      if [ `ps -C nginx --no-header |wc -l` -eq 0 ];then    #nginx重启失败，则停掉keepalived服务，进行VIP转移
+              killall keepalived                    
+      fi
+fi
+```
 
 启动keepalived
 
@@ -253,55 +255,55 @@ vrrp_instance VI_1 {
 
 访问VIP，效果如下：
 
-![](/assets/import-nginx-05.png)
+![](../../.gitbook/assets/import-nginx-05.png)
 
 我们来看下keepalived的日志信息
 
 master（192.168.0.221）：
 
-![](/assets/import-nginx-06.png)backup（192.168.0.222）：
+![](../../.gitbook/assets/import-nginx-06.png)backup（192.168.0.222）：
 
-![](/assets/import-nginx-07.png)当我们把master上的keepalived停掉（模拟宕机），再来看下keepalived日志
+![](../../.gitbook/assets/import-nginx-07.png)当我们把master上的keepalived停掉（模拟宕机），再来看下keepalived日志
 
 原master（192.168.0.221）：
 
-![](/assets/import-nginx-08.png)
+![](../../.gitbook/assets/import-nginx-08.png)
 
 原backup（192.168.0.222）：
 
-![](/assets/import-nginx-09.png)通过VIP可以正常访问服务，前端请求感受不到后端nginx的切换；重新唤醒原master（192.168.0.221）的测试这里就不进行了，大家自行测试
+![](../../.gitbook/assets/import-nginx-09.png)通过VIP可以正常访问服务，前端请求感受不到后端nginx的切换；重新唤醒原master（192.168.0.221）的测试这里就不进行了，大家自行测试
 
 ## 注意点
 
-1、执行脚本时报错：/bin/sh^M: bad interpreter: 没有那个文件或目录 
+1、执行脚本时报错：/bin/sh^M: bad interpreter: 没有那个文件或目录
 
-　　　　因为操作系统是windows，我在windows下编辑的脚本，所以有可能有不可见字符。脚本文件是DOS格式的, 即每一行的行尾以回车符和换行符来标识, 其ASCII码分别是0x0D, 0x0A。可以有很多种办法看这个文件是DOS格式的还是UNIX格式的, 还是MAC格式的
+因为操作系统是windows，我在windows下编辑的脚本，所以有可能有不可见字符。脚本文件是DOS格式的, 即每一行的行尾以回车符和换行符来标识, 其ASCII码分别是0x0D, 0x0A。可以有很多种办法看这个文件是DOS格式的还是UNIX格式的, 还是MAC格式的
 
-　　　　解决方法：
+解决方法：
 
-　　　　　　vim filename
+vim filename
 
-　　　　　　:set ff? \#可以看到dos或unix的字样. 如果的确是dos格式的。
+:set ff? \#可以看到dos或unix的字样. 如果的确是dos格式的。
 
-　　　　　　:set ff=unix \#把它强制为unix格式的, 然后存盘退出。
+:set ff=unix \#把它强制为unix格式的, 然后存盘退出。
 
-　　　　　　再次运行脚本。
+再次运行脚本。
 
-　　　　从windows编辑文件再拷贝到linux时要特别注意，另外，脚本需要赋予可执行权限才能执行，可执行文件的一种直观表现就是文件本身呈绿色。
+从windows编辑文件再拷贝到linux时要特别注意，另外，脚本需要赋予可执行权限才能执行，可执行文件的一种直观表现就是文件本身呈绿色。
 
-　　2、负载均衡最好进行多浏览器测试，有些浏览器会缓存，会产生没有负载均衡的效果，例如我这次测试中谷歌浏览器就出现了类似的情况\(还没搞清楚是否是缓存的原因\)，火狐，360、IE浏览器都是正常的负载均衡效果。
+2、负载均衡最好进行多浏览器测试，有些浏览器会缓存，会产生没有负载均衡的效果，例如我这次测试中谷歌浏览器就出现了类似的情况\(还没搞清楚是否是缓存的原因\)，火狐，360、IE浏览器都是正常的负载均衡效果。
 
-　　3、请求走向
+3、请求走向
 
-　　　　访问虚拟IP\(VIP\)，keepalived将请求映射到本地nginx，nginx将请求转发至tomcat，例如：[http://192.168.0.200/myWeb/](http://192.168.0.200/myWeb/)，被映射成[http://192.168.0.221/myWeb/](http://192.168.0.221/myWeb/)，端口是80，而221上nginx的端口正好是80；映射到nginx上后，nginx再进行请求的转发。
+访问虚拟IP\(VIP\)，keepalived将请求映射到本地nginx，nginx将请求转发至tomcat，例如：[http://192.168.0.200/myWeb/](http://192.168.0.200/myWeb/)，被映射成[http://192.168.0.221/myWeb/](http://192.168.0.221/myWeb/)，端口是80，而221上nginx的端口正好是80；映射到nginx上后，nginx再进行请求的转发。
 
-　　　　keepalived服务器的ip情况
+keepalived服务器的ip情况
 
 ![](https://images2017.cnblogs.com/blog/747662/201708/747662-20170809230202652-1896983207.png)
 
-　　　　VIP总会在keepalived服务器中的某一台上，也只会在其中的某一台上；VIP绑定的服务器上的nginx就是master，当VIP所在的服务器宕机了，keepalived会将VIP转移到backup上，并将backup提升为master。
+VIP总会在keepalived服务器中的某一台上，也只会在其中的某一台上；VIP绑定的服务器上的nginx就是master，当VIP所在的服务器宕机了，keepalived会将VIP转移到backup上，并将backup提升为master。
 
-　　4、VIP也称浮动ip，是公网ip，与域名进行映射，对外提供服务； 其他ip一般而言都是内网ip， 外部是直接访问不了的
+4、VIP也称浮动ip，是公网ip，与域名进行映射，对外提供服务； 其他ip一般而言都是内网ip， 外部是直接访问不了的
 
 ## 参考
 
@@ -312,6 +314,4 @@ master（192.168.0.221）：
 [浮动IP（FLOAT IP）](http://blog.csdn.net/readiay/article/details/53538085)
 
 [https://www.cnblogs.com/youzhibing/p/7327342.html](https://www.cnblogs.com/youzhibing/p/7327342.html)
-
-
 

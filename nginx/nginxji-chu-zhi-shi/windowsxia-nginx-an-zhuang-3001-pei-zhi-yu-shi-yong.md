@@ -292,13 +292,13 @@ configure arguments:
 
 tasklist /fi "imagename eq nginx.exe"，如下显示：
 
-映像名称                       PID 会话名              会话\#       内存使用
+映像名称 PID 会话名 会话\# 内存使用
 
 ========================= ======== ================ =========== ============
 
-nginx.exe                     8944 Console                    1      5,128 K
+nginx.exe 8944 Console 1 5,128 K
 
-nginx.exe                     6712 Console                    1      5,556 K
+nginx.exe 6712 Console 1 5,556 K
 
 7）nginx常用命令
 
@@ -348,7 +348,7 @@ instsrv Nginxc:/nginx/srvany.exe
 
 2、Nginx nginx.conf 的配置：
 
-```
+```text
 worker_processes  1;
 error_log  logs/error-debug.log info;
 

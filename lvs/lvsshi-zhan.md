@@ -1,16 +1,18 @@
 # LVS实战
 
-# [使用LVS实现负载均衡原理及安装配置详解](https://www.cnblogs.com/liwei0526vip/p/6370103.html)
+## LVS实战
+
+## [使用LVS实现负载均衡原理及安装配置详解](https://www.cnblogs.com/liwei0526vip/p/6370103.html)
 
 负载均衡集群是 load balance 集群的简写，翻译成中文就是负载均衡集群。常用的负载均衡开源软件有nginx、lvs、haproxy，商业的硬件负载均衡设备F5、Netscale。这里主要是学习 LVS 并对其进行了详细的总结记录。
 
-## 一、负载均衡LVS基本介绍 {#blogTitle0}
+### 一、负载均衡LVS基本介绍 <a id="blogTitle0"></a>
 
 LB集群的架构和原理很简单，就是当用户的请求过来时，会直接分发到Director Server上，然后它把用户的请求根据设置好的调度算法，智能均衡地分发到后端真正服务器\\(real server\\)上。为了避免不同机器上用户请求得到的数据不一样，需要用到了共享存储，这样保证所有用户请求的数据是一样的。
 
-LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是一个由章文嵩博士发起的一个开源项目，它的官方网站是\[http://www.linuxvirtualserver.org\]\(http://www.linuxvirtualserver.org/\)现在 LVS 已经是 Linux 内核标准的一部分。使用 LVS 可以达到的技术目标是：通过 LVS 达到的负载均衡技术和 Linux 操作系统实现一个高性能高可用的 Linux 服务器集群，它具有良好的可靠性、可扩展性和可操作性。从而以低廉的成本实现最优的性能。LVS 是一个实现负载均衡集群的开源软件项目，LVS架构从逻辑上可分为调度层、Server集群层和共享存储。
+LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是一个由章文嵩博士发起的一个开源项目，它的官方网站是\[[http://www.linuxvirtualserver.org\]\(http://www.linuxvirtualserver.org/\)现在](http://www.linuxvirtualserver.org]%28http://www.linuxvirtualserver.org/%29现在) LVS 已经是 Linux 内核标准的一部分。使用 LVS 可以达到的技术目标是：通过 LVS 达到的负载均衡技术和 Linux 操作系统实现一个高性能高可用的 Linux 服务器集群，它具有良好的可靠性、可扩展性和可操作性。从而以低廉的成本实现最优的性能。LVS 是一个实现负载均衡集群的开源软件项目，LVS架构从逻辑上可分为调度层、Server集群层和共享存储。
 
-## 二、LVS的基本工作原理 {#blogTitle1}
+### 二、LVS的基本工作原理 <a id="blogTitle1"></a>
 
 ![](https://images2015.cnblogs.com/blog/781035/201702/781035-20170207085512619-1627288925.png)
 
@@ -19,14 +21,14 @@ LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是�
 **3.**IPVS是工作在INPUT链上的，当用户请求到达INPUT时，IPVS会将用户请求和自己已定义好的集群服务进行比对，如果用户请求的就是定义的集群服务，那么此时IPVS会强行修改数据包里的目标IP地址及端口，并将新的数据包发往POSTROUTING链  
 **4.**POSTROUTING链接收数据包后发现目标IP地址刚好是自己的后端服务器，那么此时通过选路，将数据包最终发送给后端的服务器
 
-## 三、LVS的组成 {#blogTitle2}
+### 三、LVS的组成 <a id="blogTitle2"></a>
 
 LVS 由2部分程序组成，包括 ipvs 和 ipvsadm。
 
 1. ipvs\(ip virtual server\)：一段代码工作在内核空间，叫ipvs，是真正生效实现调度的代码。  
 2. ipvsadm：另外一段是工作在用户空间，叫ipvsadm，负责为ipvs内核框架编写规则，定义谁是集群服务，而谁是后端真实的服务器\(Real Server\)
 
-## 四、LVS相关术语 {#blogTitle3}
+### 四、LVS相关术语 <a id="blogTitle3"></a>
 
 1. DS：Director Server。指的是前端负载均衡器节点。  
 2. RS：Real Server。后端真实的工作服务器。  
@@ -37,7 +39,7 @@ LVS 由2部分程序组成，包括 ipvs 和 ipvsadm。
 
 下边是三种工作模式的原理和特点总结。
 
-## 五、LVS/NAT原理和特点 {#blogTitle4}
+### 五、LVS/NAT原理和特点 <a id="blogTitle4"></a>
 
 **1. 重点理解NAT方式的实现原理和数据包的改变。**
 
@@ -59,7 +61,7 @@ LVS 由2部分程序组成，包括 ipvs 和 ipvsadm。
 * RS可以使用任意操作系统
 * 缺陷：对Director Server压力会比较大，请求和响应都需经过director server
 
-## 六、LVS/DR原理和特点 {#blogTitle5}
+### 六、LVS/DR原理和特点 <a id="blogTitle5"></a>
 
 **1. 重将请求报文的目标MAC地址设定为挑选出的RS的MAC地址**
 
@@ -75,7 +77,9 @@ LVS 由2部分程序组成，包括 ipvs 和 ipvsadm。
 **2. LVS-DR模型的特性**
 
 * 特点1：
+
   保证前端路由将目标地址为VIP报文统统发给Director Server，而不是RS
+
 * RS可以使用私有地址；也可以是公网地址，如果使用公网地址，此时可以通过互联网对RIP进行直接访问
 * RS跟Director Server必须在同一个物理网络中
 * 所有的请求报文经由Director Server，但响应报文必须不能进过Director Server
@@ -92,7 +96,7 @@ LVS 由2部分程序组成，包括 ipvs 和 ipvsadm。
 * arptables：在arp的层次上实现在ARP解析时做防火墙规则，过滤RS响应ARP请求。这是由iptables提供的
 * 修改RS上内核参数（arp\_ignore和arp\_announce）将RS上的VIP配置在lo接口的别名上，并限制其不能响应对VIP地址解析请求。
 
-## 七、LVS/Tun原理和特点 {#blogTitle6}
+### 七、LVS/Tun原理和特点 <a id="blogTitle6"></a>
 
 在原有的IP报文外再次封装多一层IP首部，内部IP首部\(源地址为CIP，目标IIP为VIP\)，外层IP首部\(源地址为DIP，目标IP为RIP\)
 
@@ -115,7 +119,7 @@ LVS 由2部分程序组成，包括 ipvs 和 ipvsadm。
 
 **其实企业中最常用的是 DR 实现方式，而 NAT 配置上比较简单和方便，后边实践中会总结 DR 和 NAT 具体使用配置过程。**
 
-## 八、LVS的八种调度算法 {#blogTitle7}
+### 八、LVS的八种调度算法 <a id="blogTitle7"></a>
 
 **1. 轮叫调度 rr**  
 这种算法是最简单的，就是按依次循环的方式将请求调度到不同的服务器上，该算法最大的特点就是简单。轮询算法假设所有的服务器处理请求的能力都是一样的，调度器会将所有的请求平均分配给每个真实服务器，不管后端 RS 配置和处理能力，非常均衡地分发下去。
@@ -141,7 +145,7 @@ LVS 由2部分程序组成，包括 ipvs 和 ipvsadm。
 **8. 源地址散列调度算法 sh**  
 与目标地址散列调度算法类似，但它是根据源地址散列算法进行静态分配固定的服务器资源。
 
-## 九、实践LVS的NAT模式 {#blogTitle8}
+### 九、实践LVS的NAT模式 <a id="blogTitle8"></a>
 
 **1、实验环境**
 
@@ -149,7 +153,7 @@ LVS 由2部分程序组成，包括 ipvs 和 ipvsadm。
 
 **2、安装和配置**
 
-```
+```text
 两个 real server 上都安装 nginx 服务
 # yum install -y nginx
 
@@ -159,7 +163,7 @@ Director 上安装 ipvsadm
 
 **Director 上编辑 nat 实现脚本**
 
-```
+```text
 # vim /usr/local/sbin/lvs_nat.sh
 # 编辑写入如下内容：
 #! /bin/bash
@@ -184,13 +188,13 @@ $IPVSADM -a -t 172.16.254.200:80 -r 192.168.0.28:80 -m -w 1
 
 保存后，在 Director 上直接运行这个脚本就可以完成 lvs/nat 的配置
 
-```
+```text
 /bin/bash /usr/local/sbin/lvs_nat.sh
 ```
 
 **查看ipvsadm设置的规则**
 
-```
+```text
 ipvsadm -ln
 ```
 
@@ -198,7 +202,7 @@ ipvsadm -ln
 
 通过浏览器测试2台机器上的web内容[http://172.16.254.200](http://172.16.254.200/)。为了区分开，我们可以把 nginx 的默认页修改一下：
 
-```
+```text
 在 RS1 上执行
 # echo "rs1rs1" >/usr/share/nginx/html/index.html
 
@@ -208,7 +212,7 @@ ipvsadm -ln
 
 注意，切记一定要在两台 RS 上设置网关的 IP 为 director 的内网 IP。
 
-## 十、实践LVS的DR模式 {#blogTitle9}
+### 十、实践LVS的DR模式 <a id="blogTitle9"></a>
 
 **1、实验环境**
 
@@ -220,7 +224,7 @@ ipvsadm -ln
 
 **2、安装**
 
-```
+```text
 两个 real server 上都安装 nginx 服务
 # yum install -y nginx
 
@@ -230,7 +234,7 @@ Director 上安装 ipvsadm
 
 **3、Director 上配置脚本**
 
-```
+```text
 # vim /usr/local/sbin/lvs_dr.sh
 #! /bin/bash
 echo 1 > /proc/sys/net/ipv4/ip_forward
@@ -249,13 +253,13 @@ $ipv -a -t $vip:80 -r $rs2:80 -g -w 1
 
 **执行脚本：**
 
-```
+```text
 # bash /usr/local/sbin/lvs_dr.sh
 ```
 
 **4、在2台 rs 上配置脚本：**
 
-```
+```text
 # vim /usr/local/sbin/lvs_dr_rs.sh
 #! /bin/bash
 vip=192.168.0.38
@@ -269,7 +273,7 @@ echo "2" >/proc/sys/net/ipv4/conf/all/arp_announce
 
 **rs 上分别执行脚本：**
 
-```
+```text
 bash /usr/local/sbin/lvs_dr_rs.sh
 ```
 
@@ -281,7 +285,7 @@ bash /usr/local/sbin/lvs_dr_rs.sh
 
 参考链接地址：[http://www.cnblogs.com/lgfeng/archive/2012/10/16/2726308.html](http://www.cnblogs.com/lgfeng/archive/2012/10/16/2726308.html)
 
-## 十一、LVS结合keepalive {#blogTitle10}
+### 十一、LVS结合keepalive <a id="blogTitle10"></a>
 
 LVS可以实现负载均衡，但是不能够进行健康检查，比如一个rs出现故障，LVS 仍然会把请求转发给故障的rs服务器，这样就会导致请求的无效性。keepalive 软件可以进行健康检查，而且能同时实现 LVS 的高可用性，解决 LVS 单点故障的问题，其实 keepalive 就是为 LVS 而生的。
 
@@ -290,27 +294,36 @@ LVS可以实现负载均衡，但是不能够进行健康检查，比如一个rs
 4台节点
 
 * **Keepalived1 + lvs1\(Director1\)**
+
   ：192.168.0.48
+
 * **Keepalived2 + lvs2\(Director2\)**
+
   ：192.168.0.58
+
 * **Real server1**
+
   ：192.168.0.18
+
 * **Real server2**
+
   ：192.168.0.28
+
 * **IP**
+
   : 192.168.0.38
 
 **2、安装系统软件**
 
 **Lvs + keepalived的2个节点安装**
 
-```
+```text
 # yum install ipvsadm keepalived -y
 ```
 
 **Real server + nginx服务的2个节点安装**
 
-```
+```text
 # yum install epel-release -y
 # yum install nginx -y
 ```
@@ -319,7 +332,7 @@ LVS可以实现负载均衡，但是不能够进行健康检查，比如一个rs
 
 **Real server节点2台配置脚本：**
 
-```
+```text
 # vim /usr/local/sbin/lvs_dr_rs.sh
 #! /bin/bash
 vip=192.168.0.38
@@ -336,7 +349,7 @@ bash /usr/local/sbin/lvs_dr_rs.sh
 
 **keepalived节点配置\(2节点\)：**
 
-```
+```text
 主节点( MASTER )配置文件
 vim /etc/keepalived/keepalived.conf
 vrrp_instance VI_1 {
@@ -387,20 +400,20 @@ virtual_server 192.168.0.38 80 {
 
 拷贝主节点的配置文件keepalived.conf，然后修改如下内容：
 
-```
+```text
 state MASTER -> state BACKUP
 priority 100 -> priority 90
 ```
 
 **keepalived的2个节点执行如下命令，开启转发功能：**
 
-```
+```text
 # echo 1 > /proc/sys/net/ipv4/ip_forward
 ```
 
 **4、启动keepalive**
 
-```
+```text
 先主后从分别启动keepalive
 service keepalived start
 ```

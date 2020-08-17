@@ -1,6 +1,6 @@
-# Nginx的location匹配规则
+# nginx的location匹配规则
 
-* ## **语法规则**
+* **语法规则**
 
 location \[=\|~\|~\*\|^~\] /uri/ { … }
 
@@ -27,11 +27,11 @@ location \[=\|~\|~\*\|^~\] /uri/ { … }
 >
 > （ 2 ）当普通location 恰好严格匹配上，不是最大前缀匹配，则不再继续匹配正则。
 >
-> 总结一句话：  “正则 location 匹配让步普通 location 的严格精确匹配结果；但覆盖普通 location 的最大前缀匹配结果”
+> 总结一句话： “正则 location 匹配让步普通 location 的严格精确匹配结果；但覆盖普通 location 的最大前缀匹配结果”
 >
 > ## 官方文档解释
 >
-> REFER:  [http://nginx.org/en/docs/http/ngx\_http\_core\_module.html\#location](http://nginx.org/en/docs/http/ngx_http_core_module.html#location)
+> REFER: [http://nginx.org/en/docs/http/ngx\_http\_core\_module.html\#location](http://nginx.org/en/docs/http/ngx_http_core_module.html#location)
 >
 > location
 >
@@ -92,22 +92,19 @@ location \[=\|~\|~\*\|^~\] /uri/ { … }
 > To summarize, the order in which directives are checked is as follows:
 >
 > 1. Directives with the “=” prefix that match the query exactly. If found, searching stops.
->
 > 2. All remaining directives with conventional strings. If this match used the “^~” prefix, searching stops.
->
 > 3. Regular expressions, in the order they are defined in the configuration file.
->
 > 4. If \#3 yielded a match, that result is used. Otherwise, the match from \#2 is used.
 >
 > 这个顺序没必要再过多解释了。但我想用自己的话概括下上面的意思“正则 location 匹配让步普通location 的严格精确匹配结果；但覆盖普通 location 的最大前缀匹配结果”。
 >
 > It is important to know that nginx does the comparison against decoded URIs. For example, if you wish to match “/images/ /test”, then you must use “/images/ /test” to determine the location.
 >
-> 在浏览器上显示的URL 一般都会进行URLEncode ，例如“空格”会被编码为  ，但是Nginx 的URL 的匹配都是针对URLDecode 之后的。也就是说，如果你要匹配“/images/ /test ”，你写location 的时候匹配目标应该是：“/images/ /test ”。
+> 在浏览器上显示的URL 一般都会进行URLEncode ，例如“空格”会被编码为 ，但是Nginx 的URL 的匹配都是针对URLDecode 之后的。也就是说，如果你要匹配“/images/ /test ”，你写location 的时候匹配目标应该是：“/images/ /test ”。
 >
 > Example:
 >
-> location   = / {
+> location = / {
 >
 > \# matches the query / only.
 >
@@ -115,7 +112,7 @@ location \[=\|~\|~\*\|^~\] /uri/ { … }
 >
 > }
 >
-> location   / {
+> location / {
 >
 > \# matches any query, since all queries begin with /, but regular
 >
@@ -169,6 +166,4 @@ location \[=\|~\|~\*\|^~\] /uri/ { … }
 > **The prefix “@” specifies a named location. Such locations are not used during normal processing of requests, they are intended only to process internally redirected requests \(see error\_page ,try\_files \).**
 >
 > 文章开始说了location 的语法中，可以有“= ”，“^~ ”，“~ ”和“~\* ”前缀，或者干脆没有任何前缀，还有“@ ”前缀，但是后面的分析我们始终没有谈到“@ ”前缀。文章最后点内容，介绍了“＠”的用途：“@ ”是用来定义“Named Location ”的（你可以理解为独立于“普通location （location using literal strings ）”和“正则location （location using regular expressions ）”之外的第三种类型），这种“Named Location ”不是用来处理普通的HTTP 请求的，它是专门用来处理“内部重定向（internally redirected ）”请求的。注意：这里说的“内部重定向（internally redirected ）”或许说成“forward ”会好点，以为内internally redirected 是不需要跟浏览器交互的，纯粹是服务端的一个转发行为。
-
-
 

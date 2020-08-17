@@ -1,10 +1,10 @@
-# Nginx的location匹配实战
+# nginx的location匹配实战
 
-* ## location匹配的规则
+* **location匹配的规则**
 
-请参考 [Nginx的location匹配规则](/nginx/nginxji-chu-zhi-shi/nginxde-location-pi-pei-gui-ze.md)
+请参考 [Nginx的location匹配规则](nginxde-location-pi-pei-gui-ze.md)
 
-* ## location 匹配练习
+* **location 匹配练习**
 
 ### 1.先普通 location ，再正则 location
 
@@ -12,7 +12,7 @@
 
 **例1：**
 
-```
+```text
 server {
        listen       9090;
        server_name  localhost;
@@ -37,7 +37,7 @@ server {
 
 **测试请求**：
 
-```
+```text
 [root@web108 ~]# curl http://localhost:9090/
 <html>
 <head><title>403 Forbidden</title></head>
@@ -48,7 +48,7 @@ server {
 </html>
 ```
 
-```
+```text
 [root@web108 ~]# curl http://localhost:9090/index.html
 <html>
 <head>
@@ -60,7 +60,7 @@ server {
 </html>
 ```
 
-```
+```text
 [root@web108 ~]# curl http://localhost:9090/index_notfound.html
 <html>
 <head><title>404 Not Found</title></head>
@@ -71,7 +71,7 @@ server {
 </html>
 ```
 
-```
+```text
 [root@web108 ~]# curl http://localhost:9090/index.txt
 <html>
 <head><title>403 Forbidden</title></head>
@@ -97,15 +97,15 @@ server {
 >
 > curl [http://localhost:9090/index.html](http://localhost:9090/index.html) 结果是“ Welcome to nginx! ”，说明没有被“ location / {…deny all;} ”匹配，否则会 403 Forbidden ，但 /index.html 的确也是以“ / ”开头的，只不过此时的普通 location / 的匹配结果是“最大前缀”匹配，所以 Nginx 会继续搜索正则 location ， location ~ .html$ 表达了以 .html 结尾的都 allow all; 于是接着就访问到了实际存在的 index.html 页面。
 >
-> curl [http://localhost:9090/index\_notfound.html](http://localhost:9090/index_notfound.html)   同样的道理先匹配 location / {} ，但属于“普通 location 的最大前缀匹配”，于是后面被“正则 location ” location ~ .html$ {} 覆盖了，最终 allow all ； 但的确目录下不存在index\_notfound.html 页面，于是 404 Not Found 。
+> curl [http://localhost:9090/index\_notfound.html](http://localhost:9090/index_notfound.html) 同样的道理先匹配 location / {} ，但属于“普通 location 的最大前缀匹配”，于是后面被“正则 location ” location ~ .html$ {} 覆盖了，最终 allow all ； 但的确目录下不存在index\_notfound.html 页面，于是 404 Not Found 。
 >
 > curl [http://localhost:9090/index.txt](http://localhost:9090/index.txt) 因为先匹配上了 location / {..deny all;} 尽管属于“普通 location ”的最大前缀匹配结果，继续搜索正则 location ，但是 /index.txt 不是以 .html结尾的，正则 location 失败，最终采纳普通 location 的最大前缀匹配结果，于是 deny all 了。
 
 ### 2. 普通 location 的“隐式”严格匹配
 
-**例题 2 **：**我们在例题 1 的基础上增加精确配置**
+**例题 2** ：**我们在例题 1 的基础上增加精确配置**
 
-```
+```text
 server {
        listen       9090;
        server_name  localhost;
@@ -125,7 +125,7 @@ server {
 
 **测试请求：**
 
-```
+```text
 [root@web108 ~]# curl http://localhost:9090/exact/match.html
 <html>
 <head><title>404 Not Found</title></head>
@@ -146,7 +146,7 @@ server {
 
 **例题 3 ：“ ^~ ”前缀的使用**
 
-```
+```text
 server {
        listen       9090;
        server_name  localhost;
@@ -177,7 +177,7 @@ server {
 
 **例题 4 ：“ = ”前缀的使用**
 
-```
+```text
 server {
        listen       9090;
        server_name  localhost;
@@ -213,7 +213,7 @@ location 的指令与编辑顺序无关，这句话不全对。对于普通 loca
 
 **配置 3.1**
 
-```
+```text
 server {
        listen       9090;
        server_name  localhost;
@@ -228,7 +228,7 @@ server {
 
 **配置 3.2**
 
-```
+```text
 server {
        listen       9090;
        server_name  localhost;
@@ -258,7 +258,7 @@ server {
 
 **配置 3.3**
 
-```
+```text
 server {
        listen       9090;
        server_name  localhost;
@@ -273,7 +273,7 @@ server {
 
 **配置 3.4**
 
-```
+```text
 server {
        listen       9090;
        server_name  localhost;
@@ -297,11 +297,11 @@ server {
 
 ### \#5 “@” 前缀 Named Location 使用
 
-REFER:  [http://nginx.org/en/docs/http/ngx\_http\_core\_module.html\#error\_page](http://nginx.org/en/docs/http/ngx_http_core_module.html#error_page)
+REFER: [http://nginx.org/en/docs/http/ngx\_http\_core\_module.html\#error\_page](http://nginx.org/en/docs/http/ngx_http_core_module.html#error_page)
 
 假设配置如下：
 
-```
+```text
 server {
        listen       9090;
        server_name  localhost;
@@ -324,7 +324,7 @@ server {
 
 **测试一：**
 
-```
+```text
 [root@web108 ~]# curl http://localhost:9090/nofound.html -i
 HTTP/1.1 302 Found
 Server: nginx/1.1.0
@@ -335,7 +335,7 @@ Connection: keep-alive
 Cache-Control: max-age=86400
 Expires: Sun, 07 Aug 2011 08:17:21 GMT
 Content-Length: 222
- 
+
 <!DOCTYPE HTML PUBLIC “-//IETF//DTD HTML 2.0//EN”>
 <html><head>
 <title>302 Found</title>
@@ -353,7 +353,7 @@ Content-Length: 222
 
 结果：
 
-```
+```text
 [root@web108 ~]# curl http://www.baidu.com/nofound.html -i
 HTTP/1.1 302 Found
 Date: Sat, 06 Aug 2011 08:20:05 GMT
@@ -364,7 +364,7 @@ Expires: Sun, 07 Aug 2011 08:20:05 GMT
 Content-Length: 222
 Connection: Keep-Alive
 Content-Type: text/html; charset=iso-8859-1
- 
+
 <!DOCTYPE HTML PUBLIC “-//IETF//DTD HTML 2.0//EN”>
 <html><head>
 <title>302 Found</title>
@@ -376,7 +376,7 @@ Content-Type: text/html; charset=iso-8859-1
 
 **测试二：访问一个 nginx 不存在，但 baidu 存在的页面**
 
-```
+```text
 [root@web108 ~]# curl http://www.baidu.com/duty/ -i
 HTTP/1.1 200 OK
 Date: Sat, 06 Aug 2011 08:21:56 GMT
@@ -394,7 +394,7 @@ Expires: Sun, 07 Aug 2011 08:21:56 GMT
 Vary: Accept-Encoding,User-Agent
 Connection: Keep-Alive
 Content-Type: text/html
- 
+
 <!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01 Transitional//EN”
 “http://www.w3.org/TR/html4/loose.dtd”>
 。。。。
@@ -418,7 +418,7 @@ Content-Length: 3430
 Cache-Control: max-age=86400
 Expires: Sun, 07 Aug 2011 08:23:23 GMT
 Vary: Accept-Encoding,User-Agent
- 
+
 <!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01 Transitional//EN”
 “http://www.w3.org/TR/html4/loose.dtd”>
 <html>

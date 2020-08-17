@@ -12,7 +12,7 @@
 
 ### 一、安装编译工具及库文件
 
-```
+```text
 yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel
 ```
 
@@ -22,7 +22,7 @@ PCRE 作用是让 Nginx 支持 Rewrite 功能。
 
 1、下载 PCRE 安装包，下载地址： [http://downloads.sourceforge.net/project/pcre/pcre/8.35/pcre-8.35.tar.gz](http://downloads.sourceforge.net/project/pcre/pcre/8.35/pcre-8.35.tar.gz)
 
-```
+```text
 [root@bogon src]# wget http://downloads.sourceforge.net/project/pcre/pcre/8.35/pcre-8.35.tar.gz
 ```
 
@@ -30,26 +30,26 @@ PCRE 作用是让 Nginx 支持 Rewrite 功能。
 
 2、解压安装包:
 
-```
+```text
 [root@bogon src]# tar zxvf pcre-8.35.tar.gz
 ```
 
 3、进入安装包目录
 
-```
+```text
 [root@bogon src]# cd pcre-8.35
 ```
 
 4、编译安装
 
-```
+```text
 [root@bogon pcre-8.35]# ./configure
 [root@bogon pcre-8.35]# make && make install
 ```
 
 5、查看pcre版本
 
-```
+```text
 [root@bogon pcre-8.35]# pcre-config --version
 ```
 
@@ -57,27 +57,27 @@ PCRE 作用是让 Nginx 支持 Rewrite 功能。
 
 ### 安装 Nginx
 
-1、下载 Nginx，下载地址：[http://nginx.org/download/nginx-1.6.2.tar.gz](http://nginx.org/download/nginx-1.6.2.tar.gz)
+1、下载 Nginx，下载地址：[http://nginx.org/download/nginx-1.17.5.tar.gz](http://nginx.org/download/nginx-1.6.2.tar.gz)
 
-```
-[root@bogon src]# wget http://nginx.org/download/nginx-1.6.2.tar.gz
+```text
+[root@bogon src]# wget http://nginx.org/download/nginx-1.17.5.tar.gz
 ```
 
 ![](http://www.runoob.com/wp-content/uploads/2015/01/nginx3.png)2、解压安装包
 
-```
-[root@bogon src]# tar zxvf nginx-1.6.2.tar.gz
+```text
+[root@bogon src]# tar zxvf nginx-1.17.5.tar.gz
 ```
 
 3、进入安装包目录
 
-```
-[root@bogon src]# cd nginx-1.6.2
+```text
+[root@bogon src]# cd nginx-1.17.5
 ```
 
 4、编译安装
 
-```
+```text
 [root@bogon nginx-1.6.2]# ./configure --prefix=/usr/local/webserver/nginx --with-http_stub_status_module --with-http_ssl_module --with-pcre=/usr/local/src/pcre-8.35
 [root@bogon nginx-1.6.2]# make
 [root@bogon nginx-1.6.2]# make install
@@ -85,7 +85,7 @@ PCRE 作用是让 Nginx 支持 Rewrite 功能。
 
 5、查看nginx版本
 
-```
+```text
 [root@bogon nginx-1.6.2]# /usr/local/webserver/nginx/sbin/nginx -v
 ```
 
@@ -93,20 +93,18 @@ PCRE 作用是让 Nginx 支持 Rewrite 功能。
 
 到此，nginx安装完成。
 
----
-
 ## Nginx 配置
 
 创建 Nginx 运行使用的用户 www：
 
-```
+```text
 [root@bogon conf]# /usr/sbin/groupadd www 
 [root@bogon conf]# /usr/sbin/useradd -g www www
 ```
 
 配置nginx.conf ，将/usr/local/webserver/nginx/conf/nginx.conf替换为以下内容
 
-```
+```text
 [root@bogon conf]#  cat /usr/local/webserver/nginx/conf/nginx.conf
 
 user www www;
@@ -187,7 +185,7 @@ http
 
 检查配置文件nginx.conf的正确性命令：
 
-```
+```text
 [root@bogon conf]# /usr/local/webserver/nginx/sbin/nginx -t
 [root@bogon conf]# nginx -c /usr/local/nginx/conf/nginx.conf
 # -c filename     : 设置配置文件（默认是：/usr/local/etc/nginx/nginx.conf）
@@ -195,19 +193,15 @@ http
 
 ![](http://www.runoob.com/wp-content/uploads/2015/01/nginx5.png)
 
----
-
 ## 启动 Nginx
 
 Nginx 启动命令如下：
 
-```
+```text
 [root@bogon conf]# /usr/local/webserver/nginx/sbin/nginx
 ```
 
 ![](http://www.runoob.com/wp-content/uploads/2015/01/nginx6.png)
-
----
 
 ## 访问站点
 
@@ -215,17 +209,13 @@ Nginx 启动命令如下：
 
 ![](http://www.runoob.com/wp-content/uploads/2015/01/nginx7.png)
 
----
-
 ## Nginx 其他命令
 
 以下包含了 Nginx 常用的几个命令：
 
-```
+```text
 /usr/local/webserver/nginx/sbin/nginx -s reload            # 重新载入配置文件
 /usr/local/webserver/nginx/sbin/nginx -s reopen            # 重启 Nginx
 /usr/local/webserver/nginx/sbin/nginx -s stop              # 停止 Nginx
 ```
-
-
 

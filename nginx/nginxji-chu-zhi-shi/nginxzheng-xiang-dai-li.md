@@ -50,7 +50,7 @@ server端：
 
 应用在nginx的server段，不要server\_name,需要添加一个resolver。
 
-```
+```text
 server {
     # 配置DNS解析IP地址，比如 Google Public DNS，以及超时时间（5秒）
     resolver 8.8.8.8;    # 必需
@@ -95,9 +95,9 @@ client端：
 
 export http\_proxy=[http://192.168.1.9：8080](http://192.168.1.9：8080)
 
-\#source  .bashrc
+\#source .bashrc
 
 2\)反向代理：
 
-请参考[nginx反向代理](/nginx/nginxji-chu-zhi-shi/nginxfan-xiang-dai-li.md)
+请参考[nginx反向代理](nginxfan-xiang-dai-li.md)
 
