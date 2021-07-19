@@ -1,4 +1,4 @@
-# Linux下安装nginx
+# Linux下安装nginx（最新推荐）
 
 ## 参考文档
 
@@ -100,6 +100,27 @@ PCRE 作用是让 Nginx 支持 Rewrite 功能。
 ```text
 [root@bogon conf]# /usr/sbin/groupadd www 
 [root@bogon conf]# /usr/sbin/useradd -g www www
+
+```
+
+> /usr/sbin/useradd -g www www 执行可能会报错 
+>
+> 报如下错误：
+>
+> groupadd: invalid group ID 'www'
+>
+> 修复方式如下：
+
+```text
+[root@bogon local]# id www
+[root@bogon local]# id: www: no such user
+[root@bogon local]# groupadd www
+[root@bogon local]# groupadd: group 'www' already exists
+//开始添加www用户
+[root@bogon local]# useradd -g www -s /sbin/nologin www
+//再查看一下
+[root@bogon local]# id www
+uid=1001(www) gid=1000(www) 组=1000(www)
 ```
 
 配置nginx.conf ，将/usr/local/webserver/nginx/conf/nginx.conf替换为以下内容
