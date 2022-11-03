@@ -44,7 +44,7 @@ nginx的安装，本文就不讲述了，具体可参考
 
 [LVS + keepalived + nginx + tomcat 实现主从热备 + 负载均衡](http://www.cnblogs.com/youzhibing/p/5061786.html)
 
-[Linux下安装nginx](../nginxji-chu-zhi-shi/linuxxia-an-zhuang-nginx.md)
+[Linux下安装nginx](../nginx-basic-course/linuxxia-an-zhuang-nginx.md)
 
 nginx.conf
 

@@ -1,14 +1,22 @@
-# Linux下安装nginx（最新推荐）
+# nginx安装
 
-## 参考文档
+## Linux下nginx安装、配置与使用
 
-[http://www.runoob.com/linux/nginx-install-setup.html](http://www.runoob.com/linux/nginx-install-setup.html)
+### 简介
+
+* 系统平台：CentOS release 6.6 \(Final\) 64位。
+
+* 软件安装目录 `/usr/local/src`
+
+* 常用nginx安装目录（推荐） `/usr/local/nginx`
+
+* 下面示例中nginx安装目录 `/usr/local/webserver/nginx/sbin/nginx`
+
+### 参考文档
+
+[菜鸟教程: http://www.runoob.com/linux/nginx-install-setup.html](http://www.runoob.com/linux/nginx-install-setup.html)
 
 [https://www.yiibai.com/nginx/nginx-install-linux-packages.html](https://www.yiibai.com/nginx/nginx-install-linux-packages.html)
-
-## Nginx 安装
-
-系统平台：CentOS release 6.6 \(Final\) 64位。
 
 ### 一、安装编译工具及库文件
 
@@ -218,7 +226,7 @@ http
 
 Nginx 启动命令如下：
 
-```text
+```shell script
 [root@bogon conf]# /usr/local/webserver/nginx/sbin/nginx
 ```
 
@@ -234,9 +242,110 @@ Nginx 启动命令如下：
 
 以下包含了 Nginx 常用的几个命令：
 
-```text
+```shell script
 /usr/local/webserver/nginx/sbin/nginx -s reload            # 重新载入配置文件
 /usr/local/webserver/nginx/sbin/nginx -s reopen            # 重启 Nginx
 /usr/local/webserver/nginx/sbin/nginx -s stop              # 停止 Nginx
+/usr/local/webserver/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf # 指定配置文件启动命令
+/usr/local/webserver/nginx/sbin/nginx -t                            # 检测配置文件是否编译正确
 ```
 
+## windows下nginx安装、配置与使用
+
+### 简介
+
+Nginx 是一个很强大的高性能Web和反向代理服务，也是一种轻量级的Web服务器，可以作为独立的服务器部署网站，应用非常广泛，特别是现在前后端分离的情况下。而在开发过程中，我们常常需要在window系统下使用Nginx作为Web服务器。
+
+### 下载Nginx
+
+#### 1、去到Nginx官网：http://nginx.org/  ，然后点击“download”
+
+![](../assets/nginx/nginx-01.png)
+
+#### 2、在下载界面选择自己想要下载的版本，点击对应版本，下载Nginx。
+
+![](../assets/nginx/nginx-02.png)
+
+![](../assets/nginx/nginx-03.png)
+
+#### 3、 Nginx的压缩包下载完成。
+
+![](https://img-blog.csdnimg.cn/a319f3d9c5794bd183b07331d707747f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA56iL5bqP5LmL5aSn6YGT6Iez566A,size_16,color_FFFFFF,t_70,g_se,x_16)
+
+### Nginx的使用
+
+#### 1、解压Nginx压缩包。
+
+![](https://img-blog.csdnimg.cn/4c879c3db1a84d2c9f897182e55e777f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA56iL5bqP5LmL5aSn6YGT6Iez566A,size_16,color_FFFFFF,t_70,g_se,x_16)
+
+#### 2、在nginx的配置文件是conf目录下的nginx.conf，默认配置的nginx监听的端口为80，如果本地电脑的80端口有被占用，如果本地80端口已经被使用则修改成其他端口。
+
+![](https://img-blog.csdnimg.cn/78d85f59ab774024a7a1afc08b07b4c9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA56iL5bqP5LmL5aSn6YGT6Iez566A,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+查看80端口是否被占用的命令是：
+
+```shell script
+netstat -ano | findstr 0.0.0.0:80
+``` 
+或 
+
+```shell script
+netstat -ano | findstr "80"
+``` 
+
+#### 3、启动Nginx方法：
+
+* 直接双击Nginx目录下的nginx.exe，双击后一个黑色的弹窗一闪而过就消失了，启动就完成了。
+
+![](https://img-blog.csdnimg.cn/eb68166b0a5040fb88e83857228f4eb1.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA56iL5bqP5LmL5aSn6YGT6Iez566A,size_19,color_FFFFFF,t_70,g_se,x_16)
+
+* 打开电脑的cmd命令窗口，然后切换到nginx目录下，输入命令 nginx.exe 或者 start nginx ，回车即可完成启动。
+
+![](https://img-blog.csdnimg.cn/ad023940979e450ea371cd644ac55d04.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA56iL5bqP5LmL5aSn6YGT6Iez566A,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+#### 4、查看Nginx是否成功的方法
+
+![](https://img-blog.csdnimg.cn/712664ad781f4da2bab4616ad94e3cdf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA56iL5bqP5LmL5aSn6YGT6Iez566A,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+#### 5、关闭Nginx
+
+* 在cmd命令窗口里面输入nginx命令(快速停止nginx)
+
+```
+#在cmd窗口模式下，进入到nginx安装目录，执行如下命令
+nginx -s stop
+```  
+
+* 使用(完整有序的停止nginx)命令
+
+```shell script
+#在cmd窗口模式下，进入到nginx安装目录，执行如下命令
+nginx -s quit
+```
+
+* 使用taskkill命令
+
+```shell script
+#在cmd窗口模式下，进入到nginx安装目录，执行如下命令
+taskkill /f /t /im nginx.exe
+```
+
+#### 6、重启Nginx
+
+```shell script
+#在cmd窗口模式下，进入到nginx安装目录，执行如下命令
+nginx -s reload
+```
+
+#### 7、重新打开日志文件：
+
+```shell script
+#在cmd窗口模式下，进入到nginx安装目录，执行如下命令
+nginx -s reopen
+```
+
+#### 8、查看Nginx版本：
+
+```shell script
+nginx -v
+```
